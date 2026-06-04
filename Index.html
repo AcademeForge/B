@@ -1,2419 +1,295 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AcademeForge App</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-/* =========================================================
-   DESIGN TOKENS / RESET
-========================================================= */
-:root {
-  --text: #0f172a;
-  --muted: #64748b;
-  --bg: #f6f8fc;
-  --card: rgba(255, 255, 255, .92);
-  --card-solid: #fff;
-  --border: rgba(148, 163, 184, .32);
-  --shadow: 0 14px 34px rgba(15, 23, 42, .10);
-  --primary: #2563eb;
-  --primary-2: #4f46e5;
-  --green: #16a34a;
-  --danger: #dc2626;
-  --warning: #f59e0b;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-html[data-theme="dark"] {
-  --text: #f8fafc;
-  --muted: #94a3b8;
-  --bg: #07111f;
-  --card: rgba(15, 23, 42, .9);
-  --card-solid: #0f172a;
-  --border: rgba(148, 163, 184, .18);
-  --shadow: 0 14px 38px rgba(0, 0, 0, .34);
-}
-
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  color: var(--text);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at 8% 0%, rgba(37, 99, 235, .12), transparent 28rem),
-    radial-gradient(circle at 95% 8%, rgba(22, 163, 74, .1), transparent 28rem),
-    linear-gradient(180deg, var(--bg), #f8fbff);
-}
-
-html[data-theme="dark"] body {
-  background:
-    radial-gradient(circle at 8% 0%, rgba(37, 99, 235, .2), transparent 28rem),
-    radial-gradient(circle at 95% 8%, rgba(22, 163, 74, .14), transparent 28rem),
-    linear-gradient(180deg, #07111f, #0f172a);
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  min-width: 0;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* =========================================================
-   SHELL / COMMON COMPONENTS
-========================================================= */
-.app-shell {
-  width: 100%;
-  max-width: 430px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 12px 12px 96px;
-}
-
-.section {
-  display: none;
-  animation: fadeIn .18s ease;
-}
-
-.section.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: .94; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
-}
-
-.panel,
-.action-card,
-.profile-hero,
-.about-hero,
-.info-grid article,
-.batch-card,
-.post-card,
-.modal-card {
-  border: 1px solid var(--border);
-  background: var(--card);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
-}
-
-.panel {
-  border-radius: 26px;
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
-.panel h2,
-.panel h3,
-.section-head h2 {
-  margin: 0;
-  color: var(--text);
-  font-weight: 950;
-}
-
-.panel p,
-.section-head p,
-.profile-hero p {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.55;
-}
-
-.panel-icon {
-  width: 64px;
-  height: 64px;
-  display: grid;
-  place-items: center;
-  margin: 0 auto 14px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #dcfce7, #eff6ff);
-  font-size: 30px;
-}
-
-.split-head,
-.section-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.back-btn,
-.small-btn,
-.secondary-btn,
-.link-btn {
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  font-weight: 900;
-}
-
-.back-btn {
-  min-height: 38px;
-  margin-bottom: 14px;
-  padding: 0 14px;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-}
-
-.small-btn {
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  color: var(--primary);
-}
-
-.primary-btn,
-.danger-btn,
-.danger-soft-btn {
-  border: 0;
-  color: #fff;
-  font-weight: 950;
-}
-
-.primary-btn {
-  min-height: 50px;
-  padding: 0 18px;
-  border-radius: 17px;
-  background: linear-gradient(135deg, var(--green), #22c55e);
-}
-
-.danger-btn {
-  min-height: 50px;
-  border-radius: 17px;
-  background: linear-gradient(135deg, #b91c1c, #ef4444);
-}
-
-.danger-soft-btn {
-  min-height: 38px;
-  padding: 0 12px;
-  border-radius: 14px;
-  color: #991b1b;
-  background: rgba(153, 27, 27, .1);
-}
-
-.full {
-  width: 100%;
-}
-
-.link-btn {
-  min-height: 30px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--primary);
-}
-
-.message {
-  display: none;
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 16px;
-  font-size: 13px;
-  font-weight: 850;
-}
-
-.message.show {
-  display: block;
-}
-
-.message.ok {
-  color: #14532d;
-  background: #dcfce7;
-}
-
-.message.err {
-  color: #7f1d1d;
-  background: #fee2e2;
-}
-
-/* =========================================================
-   SPLASH / TOPBAR
-========================================================= */
-.splash-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(circle at 30% 18%, rgba(255, 59, 48, .28), transparent 30%),
-    radial-gradient(circle at 72% 70%, rgba(248, 199, 92, .24), transparent 34%),
-    linear-gradient(135deg, #12050a, #1a0f05, #08060f);
-  transition: opacity .42s ease, visibility .42s ease;
-}
-
-.splash-screen.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.splash-logo {
-  width: 94px;
-  height: 94px;
-  display: grid;
-  place-items: center;
-  border-radius: 30px;
-  color: #111827;
-  background: linear-gradient(135deg, #fff1a8, #f97316);
-  box-shadow: 0 0 34px rgba(248, 199, 92, .48);
-  font-size: 30px;
-  font-weight: 950;
-}
-
-.splash-screen h1 {
-  margin: 18px 0 6px;
-  color: #fff1a8;
-  font-size: 25px;
-  font-weight: 950;
-}
-
-.splash-screen p {
-  margin: 0;
-  color: #fff7d6;
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0 10px;
-  background: rgba(238, 244, 255, .92);
-  backdrop-filter: blur(14px);
-}
-
-html[data-theme="dark"] .topbar {
-  background: rgba(7, 17, 31, .92);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex: 1;
-}
-
-.brand-logo {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 13px;
-  color: #111827;
-  background: linear-gradient(135deg, #facc15, #f97316);
-  font-weight: 950;
-}
-
-.brand-copy {
-  min-width: 0;
-}
-
-.brand h1 {
-  margin: 0;
-  overflow: hidden;
-  color: var(--text);
-  font-size: 18px;
-  line-height: 1.05;
-  font-weight: 900;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.brand p {
-  margin: 3px 0 0;
-  overflow: hidden;
-  color: var(--muted);
-  font-size: 9.5px;
-  font-weight: 750;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.streak-pill,
-.icon-btn {
-  position: relative;
-  height: 38px;
-  border: 1px solid rgba(245, 158, 11, .32);
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255, 247, 237, .98), rgba(255, 255, 255, .94));
-  color: var(--warning);
-  box-shadow: 0 8px 18px rgba(245, 158, 11, .12);
-}
-
-.streak-pill {
-  min-width: 64px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-}
-
-.icon-btn {
-  width: 44px;
-}
-
-.dot {
-  position: absolute;
-  top: 7px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--danger);
-}
-
-/* =========================================================
-   HOME
-========================================================= */
-.banner-slider {
-  position: relative;
-  min-height: 184px;
-  margin: 8px 0 12px;
-  overflow: hidden;
-  border-radius: 22px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-
-.banner-slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  padding: 18px;
-  opacity: 0;
-  transform: translateX(100%);
-  transition: opacity .35s ease, transform .45s ease;
-  background:
-    radial-gradient(circle at 78% 15%, rgba(255,255,255,.34), transparent 9rem),
-    linear-gradient(135deg, #2563eb, #16a34a);
-  color: #fff;
-}
-
-.banner-slide:nth-child(2) {
-  background: linear-gradient(135deg, #7c3aed, #0ea5e9);
-}
-
-.banner-slide:nth-child(3) {
-  background: linear-gradient(135deg, #f97316, #db2777);
-}
-
-.banner-slide.active {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.banner-slide span {
-  width: fit-content;
-  padding: 5px 9px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.2);
-  font-size: 10px;
-  font-weight: 950;
-  text-transform: uppercase;
-}
-
-.banner-slide h2 {
-  margin: 10px 0 6px;
-  font-size: 25px;
-  line-height: 1.05;
-}
-
-.banner-slide p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
-  font-weight: 650;
-}
-
-.banner-dots {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  display: flex;
-  gap: 6px;
-  transform: translateX(-50%);
-}
-
-.banner-dots button {
-  width: 7px;
-  height: 7px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(255,255,255,.5);
-}
-
-.banner-dots button.active {
-  width: 22px;
-  background: #fff;
-}
-
-.marquee {
-  height: 36px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  border-radius: 15px;
-  border: 1px solid var(--border);
-  background: var(--card);
-}
-
-.marquee-track {
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-  width: max-content;
-  animation: marquee 18s linear infinite;
-}
-
-.marquee-track span {
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
-
-.action-grid {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.action-grid.two {
-  grid-template-columns: 1fr 1fr;
-}
-
-.action-card {
-  min-height: 104px;
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  padding: 12px;
-  border-radius: 21px;
-  color: var(--text);
-  text-align: left;
-}
-
-.action-card.wide {
-  min-height: 86px;
-  align-items: center;
-}
-
-.card-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: rgba(37, 99, 235, .12);
-  font-size: 18px;
-}
-
-.action-card strong {
-  display: block;
-  margin: 2px 0 5px;
-  font-size: 14px;
-  line-height: 1.15;
-  font-weight: 900;
-}
-
-.action-card small {
-  color: var(--muted);
-  font-size: 10.5px;
-  line-height: 1.35;
-  font-weight: 700;
-}
-
-.credit,
-.version {
-  margin: 18px auto 0;
-  padding: 12px 8px;
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  background: var(--card);
-  color: var(--muted);
-  text-align: center;
-  font-size: 12px;
-}
-
-.credit strong {
-  display: block;
-  color: var(--text);
-  font-size: 11.5px;
-}
-
-/* =========================================================
-   FORMS / DASHBOARDS
-========================================================= */
-.segmented {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  padding: 6px;
-  margin: 16px 0;
-  border-radius: 20px;
-  background: rgba(148, 163, 184, .18);
-}
-
-.segmented button {
-  min-height: 42px;
-  border: 0;
-  border-radius: 15px;
-  background: transparent;
-  color: var(--text);
-  font-weight: 950;
-}
-
-.segmented button.active {
-  color: #fff;
-  background: linear-gradient(135deg, var(--green), #22c55e);
-}
-
-.form-stack {
-  display: grid;
-  gap: 13px;
-}
-
-.form-stack label,
-.modal-card label {
-  display: grid;
-  gap: 7px;
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 950;
-}
-
-.form-stack input,
-.form-stack textarea,
-.form-stack select,
-.modal-card input {
-  min-height: 50px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  outline: 0;
-  background: var(--card-solid);
-  color: var(--text);
-  font-weight: 750;
-}
-
-.form-stack textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.card-list {
-  display: grid;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.card-list.compact {
-  margin-top: 10px;
-}
-
-.mini-card,
-.course-card {
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 14px;
-  background: var(--card-solid);
-  color: var(--text);
-}
-
-.course-card {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-}
-
-.course-card strong,
-.mini-card strong {
-  display: block;
-  font-weight: 950;
-}
-
-.course-card small,
-.mini-card small {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.profile-hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 14px;
-  padding: 16px;
-  border-radius: 26px;
-}
-
-.avatar {
-  width: 58px;
-  height: 58px;
-  min-width: 58px;
-  display: grid;
-  place-items: center;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #6d5dfc, #00c896);
-  color: #fff;
-  font-size: 24px;
-  font-weight: 950;
-}
-
-.detail-list {
-  display: grid;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.detail-list div {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: var(--card-solid);
-}
-
-.detail-list span {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 850;
-}
-
-.detail-list strong {
-  text-align: right;
-  overflow-wrap: anywhere;
-}
-
-.settings-toggle {
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 12px;
-  border: 0;
-  background: transparent;
-  color: var(--text);
-  text-align: left;
-}
-
-.settings-toggle small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-/* =========================================================
-   BATCHES / COMMUNITY / TEST
-========================================================= */
-.search-box {
-  min-height: 54px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 14px 0 18px;
-  padding: 0 15px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: var(--card);
-}
-
-.search-box input {
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--text);
-}
-
-.batch-grid {
-  display: grid;
-  gap: 16px;
-}
-
-.batch-card {
-  overflow: hidden;
-  border-radius: 26px;
-}
-
-.batch-art {
-  min-height: 130px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  font-size: 38px;
-}
-
-.batch-body {
-  padding: 16px;
-}
-
-.batch-body h3 {
-  margin: 0 0 8px;
-  font-size: 21px;
-  line-height: 1.15;
-}
-
-.batch-body p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.price-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 0;
-}
-
-.price-row strong {
-  font-size: 22px;
-}
-
-.price-row del,
-.price-row span {
-  color: var(--muted);
-}
-
-.community-shell {
-  display: grid;
-  gap: 12px;
-}
-
-.composer {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  background: var(--card);
-}
-
-.composer textarea {
-  min-height: 110px;
-  border: 0;
-  outline: 0;
-  resize: vertical;
-  background: transparent;
-  color: var(--text);
-}
-
-.composer > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.composer span {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.posts-list {
-  display: grid;
-  gap: 12px;
-}
-
-.post-card {
-  border-radius: 22px;
-  padding: 14px;
-}
-
-.post-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.post-top strong {
-  display: block;
-}
-
-.post-top small,
-.post-card p {
-  color: var(--muted);
-  line-height: 1.55;
-}
-
-.post-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.post-actions button {
-  min-height: 32px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--card-solid);
-  color: var(--text);
-  font-weight: 850;
-}
-
-.locked-card {
-  text-align: center;
-}
-
-.test-hero {
-  display: flex;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(37,99,235,.14), rgba(22,163,74,.12));
-}
-
-.test-hero > span {
-  font-size: 34px;
-}
-
-.question-card {
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: var(--card-solid);
-}
-
-.option-grid {
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.option-grid button {
-  min-height: 44px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--card);
-  color: var(--text);
-  text-align: left;
-  font-weight: 850;
-}
-
-.option-grid button.active {
-  color: #fff;
-  border-color: transparent;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-}
-
-/* =========================================================
-   ABOUT / SETTINGS / HEATMAP
-========================================================= */
-.about-hero,
-.heatmap-hero {
-  margin-bottom: 14px;
-  padding: 18px;
-  border-radius: 26px;
-  color: #fff;
-  background: linear-gradient(145deg, #0f172a, #1e293b);
-}
-
-.about-hero * {
-  color: #fff;
-}
-
-.about-hero span,
-.heatmap-hero small {
-  display: inline-flex;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.14);
-  font-size: 10px;
-  font-weight: 950;
-  text-transform: uppercase;
-}
-
-.about-hero h2,
-.heatmap-hero h2 {
-  margin: 10px 0 8px;
-  font-size: 27px;
-  line-height: 1.05;
-}
-
-.about-hero p,
-.heatmap-hero p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.62;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.info-grid article {
-  min-height: 130px;
-  padding: 15px;
-  border-radius: 22px;
-}
-
-.info-grid strong {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.info-grid p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.settings-profile {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 8px 0 18px;
-}
-
-.settings-profile h2 {
-  margin: 0 0 4px;
-}
-
-.settings-list {
-  display: grid;
-  gap: 2px;
-}
-
-.settings-row {
-  width: 100%;
-  min-height: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 0;
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  text-align: left;
-  font-weight: 900;
-}
-
-.settings-row small {
-  min-width: 48px;
-  padding: 6px 10px;
-  border-radius: 9px;
-  background: #ffefb0;
-  color: #92400e;
-  text-align: center;
-}
-
-.danger-text {
-  color: #b91c1c;
-}
-
-.heatmap-hero {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 14px;
-  background: linear-gradient(135deg, #f97316, #f59e0b);
-}
-
-.streak-card {
-  min-width: 98px;
-  display: grid;
-  place-items: center;
-  padding: 14px 12px;
-  border-radius: 24px;
-  background: rgba(255,255,255,.22);
-  text-align: center;
-}
-
-.streak-card strong {
-  font-size: 28px;
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 7px;
-  margin-top: 16px;
-}
-
-.day-box {
-  min-height: 72px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1px solid rgba(15,23,42,.06);
-  border-radius: 18px;
-  background: #f4f7fb;
-}
-
-.day-box span {
-  color: #64748b;
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.day-box strong {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: #e2e8f0;
-  color: #64748b;
-}
-
-.day-box.active {
-  background: linear-gradient(180deg, #fff7ed, #ffedd5);
-}
-
-.day-box.active strong {
-  color: #fff;
-  background: linear-gradient(135deg, #f97316, #f59e0b);
-}
-
-/* =========================================================
-   BOTTOM NAV / MODALS
-========================================================= */
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: max(10px, var(--safe-bottom));
-  z-index: 900;
-  width: min(calc(100% - 24px), 430px);
-  height: 68px;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: center;
-  gap: 0;
-  padding: 6px;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--card);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
-  transform: translateX(-50%);
-}
-
-.nav-btn {
-  width: 100%;
-  height: 56px;
-  display: grid;
-  grid-template-rows: 24px 14px;
-  align-content: center;
-  justify-items: center;
-  row-gap: 4px;
-  border: 0;
-  border-radius: 18px;
-  background: transparent;
-  color: #475569;
-}
-
-html[data-theme="dark"] .nav-btn {
-  color: #94a3b8;
-}
-
-.nav-btn span {
-  line-height: 24px;
-}
-
-.nav-btn b {
-  width: 100%;
-  height: 14px;
-  overflow: hidden;
-  font-size: 10.5px;
-  line-height: 14px;
-  font-weight: 900;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.nav-btn.active {
-  color: var(--primary);
-  background: rgba(37, 99, 235, .12);
-}
-
-.modal {
-  width: min(100% - 32px, 380px);
-  border: 0;
-  padding: 0;
-  background: transparent;
-}
-
-.modal::backdrop {
-  background: rgba(2, 6, 23, .62);
-  backdrop-filter: blur(10px);
-}
-
-.modal-card {
-  display: grid;
-  gap: 14px;
-  border-radius: 24px;
-  padding: 18px;
-  color: var(--text);
-}
-
-.modal-card h3 {
-  margin: 0;
-}
-
-.modal-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 92px;
-  z-index: 9999;
-  width: min(340px, calc(100vw - 32px));
-  display: none;
-  padding: 12px 16px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, .96);
-  color: #fff;
-  box-shadow: 0 18px 45px rgba(15,23,42,.28);
-  font-size: 13px;
-  font-weight: 900;
-  text-align: center;
-  transform: translateX(-50%);
-}
-
-.toast.show {
-  display: block;
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media (max-width: 420px) {
-  .action-grid.two,
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .action-card {
-    min-height: 88px;
-    align-items: center;
-  }
-}
-
-@media (max-width: 380px) {
-  .brand h1 {
-    font-size: 16px;
-  }
-
-  .brand p {
-    display: none;
-  }
-
-  .bottom-nav {
-    width: calc(100% - 16px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView APK Builder</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" href="/logo192.png"/>
+    <link rel="icon" href="/favicon.ico"/>
 </head>
 <body>
-  <!-- =========================================================
-       SPLASH
-  ========================================================== -->
-  <div id="splashScreen" class="splash-screen" aria-hidden="true">
-    <div class="splash-logo">AF</div>
-    <h1>AcademeForge</h1>
-    <p>Learning Beyond The Classroom</p>
-  </div>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h1>WebView APK Builder</h1>
+                </div>
+                <p class="subtitle">Convert any website into an Android APK with customizable branding</p>
+                <div class="header-donate">
+                    <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-header">
+                        <i class="fas fa-coffee"></i>
+                        Support this project
+                    </a>
+                </div>
+            </div>
+        </header>
 
-  <main class="app-shell">
-    <!-- =========================================================
-         TOP BAR
-    ========================================================== -->
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-logo">AF</div>
-        <div class="brand-copy">
-          <h1>AcademeForge</h1>
-          <p>Learning Beyond the Classroom</p>
-        </div>
-      </div>
+        <main class="main-content">
+            <div class="builder-card">
 
-      <button class="streak-pill" type="button" data-section-link="learningHeatmap" aria-label="Open learning heatmap">
-        <span aria-hidden="true">🔥</span>
-        <strong id="headerStreak">0</strong>
-      </button>
+                <form id="apkForm" class="apk-form">
+                    <div class="form-section">
+                        <h2><i class="fas fa-globe"></i> Website Configuration</h2>
+                        
+                        <div class="input-group">
+                            <label for="websiteUrl">Website URL</label>
+                            <input 
+                                type="url" 
+                                id="websiteUrl" 
+                                name="websiteUrl" 
+                                placeholder="https://example.com" 
+                                required
+                            >
+                            <small class="input-help">Enter the full URL of the website you want to convert</small>
+                        </div>
+                    </div>
 
-      <button class="icon-btn" type="button" data-section-link="notifications" aria-label="Open notifications">
-        <span aria-hidden="true">🔔</span>
-        <span id="notificationDot" class="dot hidden"></span>
-      </button>
-    </header>
+                    <div class="form-section">
+                        <h2><i class="fas fa-paint-brush"></i> App Branding</h2>
+                        
+                        <div class="input-group">
+                            <label for="appName">App Name</label>
+                            <input 
+                                type="text" 
+                                id="appName" 
+                                name="appName" 
+                                placeholder="My Awesome App" 
+                                maxlength="30"
+                                required
+                            >
+                            <small class="input-help">This will appear as the app name on the device</small>
+                        </div>
 
-    <!-- =========================================================
-         HOME
-    ========================================================== -->
-    <section id="home" class="section active">
-      <div class="banner-slider" aria-label="AcademeForge announcements">
-        <article class="banner-slide active">
-          <span>Beta</span>
-          <h2>AF Nexus is being updated</h2>
-          <p>Courses, community, tests, and dashboards are now organized in one cleaner app.</p>
-        </article>
-        <article class="banner-slide">
-          <span>Learn</span>
-          <h2>Skill batches are open</h2>
-          <p>Explore AI, design, editing, freelancing, and prompt engineering batches.</p>
-        </article>
-        <article class="banner-slide">
-          <span>Practice</span>
-          <h2>Test Arena preview</h2>
-          <p>Attempt sample assessments and track your score locally.</p>
-        </article>
-        <div id="bannerDots" class="banner-dots"></div>
-      </div>
+                        <div class="input-group">
+                            <label for="icon">App Icon</label>
+                            <div class="file-upload">
+                                <input 
+                                    type="file" 
+                                    id="icon" 
+                                    name="icon" 
+                                    accept="image/*"
+                                    required
+                                >
+                                <div class="file-upload-display">
+                                    <div class="file-upload-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <span>Click to select app icon</span>
+                                    </div>
+                                    <div class="file-upload-preview hidden">
+                                        <img id="iconPreview" src="" alt="Icon preview">
+                                        <span id="fileName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="input-help">Upload a square image (PNG/JPG, max 5MB). Recommended: 512x512px</small>
+                        </div>
+                    </div>
 
-      <div class="marquee" aria-label="Latest update">
-        <div class="marquee-track">
-          <span>🔔 This is a beta version. AF Nexus content is being updated.</span>
-          <span>🔔 This is a beta version. AF Nexus content is being updated.</span>
-        </div>
-      </div>
+                    <div class="form-section">
+                        <h2><i class="fas fa-cog"></i> App Configuration</h2>
+                        
+                        <div class="input-group">
+                            <label for="packageName">Package Name</label>
+                            <input 
+                                type="text" 
+                                id="packageName" 
+                                name="packageName" 
+                                placeholder="com.example.myapp" 
+                                pattern="^[a-zA-Z][a-zA-Z0-9]*(\.[a-zA-Z][a-zA-Z0-9]*)+$"
+                                required
+                            >
+                            <small class="input-help">Unique identifier (e.g., com.yourcompany.appname)</small>
+                        </div>
 
-      <div class="action-grid two">
-        <button class="action-card" type="button" data-section-link="student">
-          <span class="card-icon">🎓</span>
-          <span>
-            <strong>Student Login</strong>
-            <small>Access your course dashboard.</small>
-          </span>
-        </button>
-        <button class="action-card" type="button" id="profileCardBtn">
-          <span class="card-icon">👤</span>
-          <span>
-            <strong id="homeProfileName">Hi, Student</strong>
-            <small id="homeProfileSub">Login to view profile</small>
-          </span>
-        </button>
-      </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="versionName">Version Name</label>
+                                <input 
+                                    type="text" 
+                                    id="versionName" 
+                                    name="versionName" 
+                                    placeholder="1.0.0" 
+                                    pattern="^\d+\.\d+\.\d+$"
+                                    required
+                                >
+                                <small class="input-help">User-visible version (e.g., 1.0.0)</small>
+                            </div>
 
-      <div class="action-grid">
-        <button class="action-card wide" type="button" data-section-link="testArena">
-          <span class="card-icon">🧪</span>
-          <span>
-            <strong>AF Test Arena</strong>
-            <small>Attempt quizzes and see your score.</small>
-          </span>
-        </button>
-        <button class="action-card wide" type="button" data-section-link="about">
-          <span class="card-icon">🔥</span>
-          <span>
-            <strong>About Us</strong>
-            <small>Know the story behind AcademeForge.</small>
-          </span>
-        </button>
-      </div>
+                            <div class="input-group">
+                                <label for="versionCode">Version Code</label>
+                                <input 
+                                    type="number" 
+                                    id="versionCode" 
+                                    name="versionCode" 
+                                    placeholder="1" 
+                                    min="1"
+                                    required
+                                >
+                                <small class="input-help">Internal version number</small>
+                            </div>
+                        </div>
+                    </div>
 
-      <footer class="credit">
-        <strong>Developed by Devraj Kumar</strong>
-        <span>Made with love in India.</span>
-      </footer>
-    </section>
+                    <button type="submit" class="build-button" id="buildButton">
+                        <i class="fas fa-rocket"></i>
+                        <span>Build APK</span>
+                    </button>
+                </form>
 
-    <!-- =========================================================
-         STUDENT LOGIN / COURSE DASHBOARD
-    ========================================================== -->
-    <section id="student" class="section">
-      <button class="back-btn" type="button" data-section-link="home">← Back</button>
+                <div id="buildStatus" class="build-status hidden">
+                    <div class="status-content">
+                        <div class="spinner"></div>
+                        <p id="statusMessage">Building your APK...</p>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span id="progressText">Preparing build...</span>
+                                <span id="estimatedTime">Estimated time: calculating...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div id="authCard" class="panel">
-        <div class="panel-icon">🎓</div>
-        <h2>Student ID Access</h2>
-        <p>Login or create a local Student ID to access courses, batches, and community features.</p>
+                <div id="buildResult" class="build-result hidden">
+                    <div class="result-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>APK Generated Successfully!</h3>
+                        <p>Your APK has been built and is ready for download and installation.</p>
+                        <div class="download-section">
+                            <a href="#" id="downloadLink" class="download-button">
+                                <i class="fas fa-download"></i>
+                                <span>Download APK</span>
+                            </a>
+                            
+                            <div class="success-donate">
+                                <p class="donate-message">🎉 <strong>Awesome!</strong> Your APK is ready!</p>
+                                <p class="donate-sub">If this tool helped you, consider supporting our work:</p>
+                                <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-success">
+                                    <i class="fas fa-heart"></i>
+                                    Buy us a coffee ☕
+                                </a>
+                            </div>
+                        </div>
+                        <div class="build-instructions">
+                            <h4>Installation Instructions:</h4>
+                            <ol>
+                                <li>Download the APK file to your Android device</li>
+                                <li>Enable "Unknown sources" in your device settings</li>
+                                <li>Open the APK file to install the app</li>
+                                <li>Launch your new app from the home screen</li>
+                            </ol>
+                            <div class="apk-info">
+                                <h5>APK Details:</h5>
+                                <ul>
+                                    <li>✅ Ready for installation on Android 5.0+</li>
+                                    <li>✅ WebView with JavaScript support</li>
+                                    <li>✅ Custom app icon and branding</li>
+                                    <li>✅ Back button navigation</li>
+                                    <li>✅ Data persistence (saves user data, login sessions, etc.)</li>
+                                    <li>✅ Hardware acceleration for smooth performance</li>
+                                    <li>✅ Auto backup and restore capabilities</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="segmented">
-          <button id="loginTab" class="active" type="button" data-auth-tab="login">Login</button>
-          <button id="createTab" type="button" data-auth-tab="create">Create ID</button>
-        </div>
+            <div class="info-section">
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure & Private</h3>
+                        <p>All processing is done server-side. No data is stored permanently.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Native Experience</h3>
+                        <p>Creates a true Android app with data persistence and native performance.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-download"></i>
+                        <h3>Direct APK Build</h3>
+                        <p>Get a ready-to-install APK file directly, no additional tools needed.</p>
+                    </div>
+                </div>
 
-        <form id="loginForm" class="form-stack">
-          <label>
-            <span>Student ID / Phone</span>
-            <input id="loginId" type="tel" autocomplete="username" placeholder="Enter phone number" />
-          </label>
-          <label>
-            <span>Password</span>
-            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter password" />
-          </label>
-          <button class="primary-btn" type="submit">Login</button>
-        </form>
+                <div class="features">
+                    <h3>Features Included:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> WebView with JavaScript support</li>
+                        <li><i class="fas fa-check"></i> Back button navigation</li>
+                        <li><i class="fas fa-check"></i> Custom app icon and name</li>
+                        <li><i class="fas fa-check"></i> Data persistence (LocalStorage, SessionStorage, Cookies)</li>
+                        <li><i class="fas fa-check"></i> Automatic backup and restore</li>
+                        <li><i class="fas fa-check"></i> Hardware acceleration</li>
+                        <li><i class="fas fa-check"></i> Portrait orientation lock</li>
+                        <li><i class="fas fa-check"></i> Modern Android compatibility (API 21+)</li>
+                    </ul>
+                </div>
 
-        <form id="createForm" class="form-stack hidden">
-          <label>
-            <span>Full Name</span>
-            <input id="createName" type="text" autocomplete="name" placeholder="Enter your full name" />
-          </label>
-          <label>
-            <span>Phone Number</span>
-            <input id="createPhone" type="tel" autocomplete="tel" placeholder="Enter phone number" />
-          </label>
-          <label>
-            <span>Email Address</span>
-            <input id="createEmail" type="email" autocomplete="email" placeholder="Enter email address" />
-          </label>
-          <label>
-            <span>Create Password</span>
-            <input id="createPassword" type="password" autocomplete="new-password" placeholder="Create password" />
-          </label>
-          <button class="primary-btn" type="submit">Create Student ID</button>
-        </form>
+                <div class="queue-status-section">
+                    <h3>Build Queue Status:</h3>
+                    <div id="queueStatus" class="queue-status">
+                        <div class="queue-item">
+                            <i class="fas fa-server"></i>
+                            <span>Loading queue status...</span>
+                        </div>
+                    </div>
+                    <small class="queue-help">
+                        Our server can build up to 4 apps simultaneously. Additional requests are queued and processed in order.
+                    </small>
+                </div>
+            </div>
+        </main>
 
-        <div id="authMessage" class="message" aria-live="polite"></div>
-      </div>
-
-      <div id="courseDashboard" class="panel hidden">
-        <div class="split-head">
-          <div>
-            <h2>📚 My Courses</h2>
-            <p id="studentWelcome">Welcome Student</p>
-          </div>
-          <button class="danger-soft-btn" type="button" id="logoutBtn">Logout</button>
-        </div>
-        <div id="courseGrid" class="card-list"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         PROFILE
-    ========================================================== -->
-    <section id="profile" class="section">
-      <button class="back-btn" type="button" data-section-link="home">← Back</button>
-      <div class="profile-hero">
-        <div id="profileAvatar" class="avatar">S</div>
-        <div>
-          <h2 id="profileName">Student</h2>
-          <p>View and manage your dashboard</p>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="split-head">
-          <div>
-            <h3>Your Details</h3>
-            <p>Name, email and phone number</p>
-          </div>
-          <button class="small-btn" type="button" id="editNameBtn">Edit</button>
-        </div>
-        <div class="detail-list">
-          <div><span>Name</span><strong id="infoName">-</strong></div>
-          <div><span>Email</span><strong id="infoEmail">-</strong></div>
-          <div><span>Phone Number</span><strong id="infoPhone">-</strong></div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>Batch Enrolled In</h3>
-        <div id="profileBatchList" class="card-list compact"></div>
-      </div>
-
-      <div class="panel">
-        <button id="extraSettingsToggle" class="settings-toggle" type="button">
-          <span>⚙️</span>
-          <span><strong>Additional Setting</strong><small>Account safety and sensitive actions</small></span>
-          <b>⌄</b>
-        </button>
-        <div id="extraSettingsBody" class="hidden">
-          <button class="danger-btn full" type="button" id="deleteAccountBtn">Delete Account Request</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         BATCHES
-    ========================================================== -->
-    <section id="batches" class="section">
-      <div class="section-head">
-        <div>
-          <h2>All Batches</h2>
-          <p id="batchCount">5 batches available</p>
-        </div>
-      </div>
-      <label class="search-box">
-        <span>🔍</span>
-        <input id="batchSearch" type="search" placeholder="Search for batches" />
-      </label>
-      <div id="batchGrid" class="batch-grid"></div>
-    </section>
-
-    <!-- =========================================================
-         COMMUNITY
-    ========================================================== -->
-    <section id="community" class="section">
-      <div id="communityLocked" class="panel locked-card">
-        <div class="panel-icon">🔒</div>
-        <h2>Community Locked</h2>
-        <p>Login to access AF Nexus and interact with fellow learners.</p>
-        <button class="primary-btn" type="button" data-section-link="student">Login to Continue</button>
-      </div>
-
-      <div id="communityMain" class="community-shell hidden">
-        <div class="split-head">
-          <div>
-            <h2>AF Nexus</h2>
-            <p>Connect, discuss and grow with fellow learners.</p>
-          </div>
-          <button id="myPostsBtn" class="small-btn" type="button">My Posts</button>
-        </div>
-
-        <form id="postForm" class="composer">
-          <textarea id="postInput" maxlength="500" placeholder="Write something helpful, thoughtful, or interesting..."></textarea>
-          <div>
-            <span id="postCount">0 / 80 words</span>
-            <button class="primary-btn" type="submit">Post</button>
-          </div>
-        </form>
-
-        <div class="segmented">
-          <button id="feedAllBtn" class="active" type="button" data-feed="all">All Posts</button>
-          <button id="feedMineBtn" type="button" data-feed="mine">My Posts</button>
-        </div>
-
-        <div id="postsList" class="posts-list"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         TEST ARENA
-    ========================================================== -->
-    <section id="testArena" class="section">
-      <button class="back-btn" type="button" data-section-link="home">← Back</button>
-      <div id="testLocked" class="panel locked-card">
-        <div class="panel-icon">🔒</div>
-        <h2>AcademeForge Scholars Tests</h2>
-        <p>Login to know about upcoming tests and attempt sample assessments.</p>
-        <button class="primary-btn" type="button" data-section-link="student">Login Now</button>
-      </div>
-
-      <div id="testMain" class="panel hidden">
-        <div class="test-hero">
-          <span>🧪</span>
-          <div>
-            <small>AF Nexus</small>
-            <h2>AcademeForge Scholars Test</h2>
-            <p>Answer five quick questions and get an instant local score.</p>
-          </div>
-        </div>
-        <div id="testArea"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         NOTIFICATIONS
-    ========================================================== -->
-    <section id="notifications" class="section">
-      <button class="back-btn" type="button" data-section-link="home">← Back</button>
-      <div class="panel">
-        <h2>🔔 Notifications</h2>
-        <p>Latest lectures, batch updates, notes, and announcements.</p>
-        <div id="notificationsList" class="card-list"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         ABOUT
-    ========================================================== -->
-    <section id="about" class="section">
-      <button class="back-btn" type="button" data-section-link="home">← Back</button>
-      <div class="about-hero">
-        <span>About AcademeForge</span>
-        <h2>Learning Beyond the Classroom</h2>
-        <p>AcademeForge is built as a modern learning space where students can access courses, batches, updates, community, and study tools in one simple app.</p>
-      </div>
-      <div class="info-grid">
-        <article><strong>Mission</strong><p>Make practical learning simple, organized, and accessible.</p></article>
-        <article><strong>Vision</strong><p>Build a smart learning ecosystem where students grow with confidence.</p></article>
-        <article><strong>Founder</strong><p>Devraj Kumar, Founder and Developer of AcademeForge.</p></article>
-        <article><strong>Focus</strong><p>Simple UI, fast access, practical skills, and community learning.</p></article>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         SETTINGS
-    ========================================================== -->
-    <section id="settings" class="section">
-      <div class="settings-profile">
-        <div class="avatar">👨‍🎓</div>
-        <div>
-          <h2 id="settingsName">Hi, Student</h2>
-          <button class="link-btn" type="button" id="settingsProfileBtn">View profile</button>
-        </div>
-      </div>
-
-      <div class="settings-list">
-        <label class="settings-row">
-          <span>🌙 Night Mode</span>
-          <input id="themeToggle" type="checkbox" role="switch" />
-        </label>
-        <button class="settings-row" type="button" data-section-link="testArena"><span>🎓 AF Test Arena</span><b>›</b></button>
-        <button class="settings-row" type="button" data-section-link="student"><span>📋 Login/Create ID</span><b>›</b></button>
-        <button class="settings-row" type="button" id="bugReportBtn"><span>🐞 Report a Bug</span><b>›</b></button>
-        <button class="settings-row" type="button" id="bugStatusBtn"><span>📌 Bug Report Status</span><small>Track</small></button>
-        <button class="settings-row" type="button" data-section-link="learningHeatmap"><span>🔥 Learning Heatmap</span><b>›</b></button>
-        <button class="settings-row" type="button" data-section-link="notifications"><span>📚 Notifications</span><small>New</small></button>
-        <button class="settings-row" type="button" data-section-link="about"><span>ⓘ About Us</span><b>›</b></button>
-        <button class="settings-row" type="button" id="contactBtn"><span>☎ Contact Us</span><b>›</b></button>
-        <button class="settings-row danger-text" type="button" id="settingsLogoutBtn"><span>↩ Logout</span></button>
-      </div>
-
-      <footer class="version">App Version: 09.01.2024<br />Made with love in India</footer>
-    </section>
-
-    <!-- =========================================================
-         LEARNING HEATMAP
-    ========================================================== -->
-    <section id="learningHeatmap" class="section">
-      <button class="back-btn" type="button" data-section-link="settings">← Back to Settings</button>
-      <div class="heatmap-hero">
-        <div>
-          <small>Weekly Online Activity</small>
-          <h2>Learning Heatmap</h2>
-          <p>Login daily and stay active to maintain your learning streak.</p>
-        </div>
-        <div class="streak-card"><span>🔥</span><strong id="heatmapStreak">0</strong><small>Day Streak</small></div>
-      </div>
-      <div class="panel">
-        <div class="split-head">
-          <div><h3>This Week</h3><p id="heatmapStatus">Checking activity...</p></div>
-          <button class="small-btn" type="button" id="refreshHeatmap">↻</button>
-        </div>
-        <div id="weekGrid" class="week-grid"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         CONTACT / REQUEST STATUS
-    ========================================================== -->
-    <section id="contact" class="section">
-      <button class="back-btn" type="button" data-section-link="settings">← Back to Settings</button>
-      <div class="panel">
-        <h2>Request a Call or Email Reply</h2>
-        <form id="contactForm" class="form-stack">
-          <label><span>Full Name</span><input id="contactName" type="text" required /></label>
-          <label><span>Mobile Number</span><input id="contactPhone" type="tel" required /></label>
-          <label><span>Email Address</span><input id="contactEmail" type="email" required /></label>
-          <label><span>Reason</span><select id="contactReason"><option>General Support</option><option>Login Issue</option><option>Course Access</option><option>Payment Query</option></select></label>
-          <label><span>Describe Your Problem</span><textarea id="contactProblem" required></textarea></label>
-          <button class="primary-btn" type="submit">Submit Request</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="requestStatus" class="section">
-      <button class="back-btn" type="button" data-section-link="settings">← Back to Settings</button>
-      <div class="panel">
-        <h2>Request Status</h2>
-        <p>Local bug/contact requests submitted from this app.</p>
-        <div id="requestStatusList" class="card-list"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- =========================================================
-       BOTTOM NAVIGATION
-  ========================================================== -->
-  <nav class="bottom-nav" aria-label="Primary navigation">
-    <button class="nav-btn active" type="button" data-section-link="home"><span>🏠</span><b>Home</b></button>
-    <button class="nav-btn" type="button" data-section-link="student"><span>🎓</span><b>Student</b></button>
-    <button class="nav-btn" type="button" data-section-link="batches"><span>📚</span><b>Batches</b></button>
-    <button class="nav-btn" type="button" data-section-link="community"><span>💬</span><b>Community</b></button>
-    <button class="nav-btn" type="button" data-section-link="settings"><span>⚙️</span><b>Settings</b></button>
-  </nav>
-
-  <!-- =========================================================
-       MODALS / TOAST
-  ========================================================== -->
-  <dialog id="nameModal" class="modal">
-    <form method="dialog" id="nameForm" class="modal-card">
-      <h3>Edit Name</h3>
-      <label><span>Full Name</span><input id="nameInput" type="text" maxlength="90" /></label>
-      <div class="modal-actions">
-        <button class="secondary-btn" value="cancel">Cancel</button>
-        <button class="primary-btn" value="save">Save</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="genericModal" class="modal">
-    <div class="modal-card">
-      <h3 id="genericTitle">Message</h3>
-      <p id="genericText"></p>
-      <button class="primary-btn" type="button" id="genericClose">Okay</button>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Amethyst Lab. Built with ❤️ for people.</p>
+                <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-footer">
+                    <i class="fas fa-coffee"></i>
+                    Support Us on Ko-fi
+                </a>
+            </div>
+        </footer>
     </div>
-  </dialog>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-  
-<script>
-/* =========================================================
-   ACADMEFORGE CLEAN APP JS
-   - No duplicate function names
-   - No dead Supabase/Razorpay calls
-   - LocalStorage powered demo data
-========================================================= */
-
-(() => {
-  "use strict";
-
-  /* =========================================================
-     STATE / DATA
-  ========================================================== */
-  const STORE = {
-    student: "af_clean_student",
-    courses: "af_clean_courses",
-    posts: "af_clean_posts",
-    requests: "af_clean_requests",
-    activity: "af_clean_activity",
-    theme: "af_clean_theme",
-    notificationsSeen: "af_clean_notifications_seen"
-  };
-
-  const courses = [
-    { id: "video-editing", icon: "🎬", title: "Video & Media Editing Mastery", desc: "Editing, storytelling, reels, shorts, and content creation." },
-    { id: "graphic-design", icon: "🎨", title: "Creative & Graphic Design Mastery", desc: "Posters, thumbnails, banners, brand creatives, and visual content." },
-    { id: "ai-coding", icon: "💻", title: "AI Coding & Logic Foundation", desc: "Coding logic, AI basics, prompts, and programming thinking." },
-    { id: "freelancing", icon: "💼", title: "Freelancing & Monetization Roadmap", desc: "Client work, service packaging, pricing, and digital earning." },
-    { id: "prompt-engineering", icon: "🤖", title: "AI & Prompt Engineering", desc: "AI tools, prompt structure, workflows, and productivity." }
-  ];
-
-  const notifications = [
-    { type: "General", title: "Beta update", message: "AF Nexus is being updated with cleaner sections and faster navigation.", date: "2026-05-29" },
-    { type: "Batch", title: "Skill batches", message: "Five skill batches are available in the Batches section.", date: "2026-05-29" },
-    { type: "Test", title: "Test Arena", message: "A local sample quiz is available after login.", date: "2026-05-29" }
-  ];
-
-  const testQuestions = [
-    { q: "What does HTML mainly define?", options: ["Page structure", "Database rules", "Payment gateway", "Server hosting"], answer: 0 },
-    { q: "Which skill is useful for clear AI output?", options: ["Prompt writing", "Random clicking", "Slow typing", "Closing tabs"], answer: 0 },
-    { q: "CSS is mainly used for what?", options: ["Styling pages", "Charging phones", "Sending OTP", "Buying domains"], answer: 0 },
-    { q: "A good learner should be", options: ["Consistent", "Always distracted", "Careless", "Inactive"], answer: 0 },
-    { q: "AF Nexus is the app's", options: ["Community space", "Battery saver", "Keyboard", "Camera"], answer: 0 }
-  ];
-
-  let bannerIndex = 0;
-  let bannerTimer = null;
-  let activeFeed = "all";
-  let activeTestQuestion = 0;
-  let testAnswers = {};
-
-  /* =========================================================
-     DOM HELPERS
-  ========================================================== */
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
-  function readJson(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
-  function writeJson(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  function words(value) {
-    const text = String(value || "").trim();
-    return text ? text.split(/\s+/).filter(Boolean).length : 0;
-  }
-
-  function toast(message) {
-    const node = $("#toast");
-    if (!node) return;
-    node.textContent = message;
-    node.classList.add("show");
-    window.clearTimeout(window.__afToast);
-    window.__afToast = window.setTimeout(() => node.classList.remove("show"), 2400);
-  }
-
-  function message(node, text, type) {
-    if (!node) return;
-    node.textContent = text || "";
-    node.className = text ? `message show ${type || "ok"}` : "message";
-  }
-
-  function getStudent() {
-    return readJson(STORE.student, null);
-  }
-
-  function setStudent(student) {
-    if (student) {
-      writeJson(STORE.student, student);
-    } else {
-      localStorage.removeItem(STORE.student);
-    }
-    syncStudentUI();
-  }
-
-  function isLoggedIn() {
-    return Boolean(getStudent());
-  }
-
-  /* =========================================================
-     NAVIGATION
-  ========================================================== */
-  function showSection(id) {
-    const target = document.getElementById(id);
-    if (!target) return;
-
-    $$(".section").forEach(section => section.classList.remove("active"));
-    target.classList.add("active");
-
-    $$(".nav-btn").forEach(button => {
-      button.classList.toggle("active", button.dataset.sectionLink === id);
-    });
-
-    if (id === "community") renderCommunity();
-    if (id === "batches") renderBatches();
-    if (id === "notifications") renderNotifications(true);
-    if (id === "profile") renderProfile();
-    if (id === "testArena") renderTestGate();
-    if (id === "learningHeatmap") renderHeatmap();
-    if (id === "requestStatus") renderRequests();
-
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }
-
-  function bindNavigation() {
-    document.addEventListener("click", event => {
-      const link = event.target.closest("[data-section-link]");
-      if (!link) return;
-      event.preventDefault();
-      showSection(link.dataset.sectionLink);
-    });
-
-    $("#profileCardBtn")?.addEventListener("click", () => {
-      showSection(isLoggedIn() ? "profile" : "student");
-    });
-
-    $("#settingsProfileBtn")?.addEventListener("click", () => {
-      showSection(isLoggedIn() ? "profile" : "student");
-    });
-
-    $("#contactBtn")?.addEventListener("click", () => showSection("contact"));
-    $("#bugStatusBtn")?.addEventListener("click", () => showSection("requestStatus"));
-  }
-
-  /* =========================================================
-     SPLASH / THEME
-  ========================================================== */
-  function initSplash() {
-    window.setTimeout(() => $("#splashScreen")?.classList.add("hide"), 900);
-  }
-
-  function initTheme() {
-    const saved = localStorage.getItem(STORE.theme) || "light";
-    document.documentElement.dataset.theme = saved;
-    const toggle = $("#themeToggle");
-    if (toggle) toggle.checked = saved === "dark";
-
-    toggle?.addEventListener("change", () => {
-      const next = toggle.checked ? "dark" : "light";
-      document.documentElement.dataset.theme = next;
-      localStorage.setItem(STORE.theme, next);
-    });
-  }
-
-  /* =========================================================
-     BANNER
-  ========================================================== */
-  function initBanner() {
-    const slides = $$(".banner-slide");
-    const dots = $("#bannerDots");
-    if (!slides.length || !dots) return;
-
-    dots.innerHTML = slides.map((_, index) => `<button type="button" aria-label="Banner ${index + 1}"></button>`).join("");
-    const dotButtons = $$("button", dots);
-
-    function show(index) {
-      bannerIndex = (index + slides.length) % slides.length;
-      slides.forEach((slide, i) => slide.classList.toggle("active", i === bannerIndex));
-      dotButtons.forEach((dot, i) => dot.classList.toggle("active", i === bannerIndex));
-    }
-
-    dotButtons.forEach((dot, index) => dot.addEventListener("click", () => {
-      show(index);
-      restart();
-    }));
-
-    function restart() {
-      window.clearInterval(bannerTimer);
-      bannerTimer = window.setInterval(() => show(bannerIndex + 1), 3600);
-    }
-
-    show(0);
-    restart();
-  }
-
-  /* =========================================================
-     AUTH / STUDENT DASHBOARD
-  ========================================================== */
-  function initAuth() {
-    $("[data-auth-tab='login']")?.addEventListener("click", () => switchAuth("login"));
-    $("[data-auth-tab='create']")?.addEventListener("click", () => switchAuth("create"));
-
-    $("#loginForm")?.addEventListener("submit", event => {
-      event.preventDefault();
-      const id = $("#loginId").value.trim();
-      const password = $("#loginPassword").value.trim();
-      const saved = readJson(`af_clean_account_${id}`, null);
-      const msg = $("#authMessage");
-
-      if (!id || !password) {
-        message(msg, "Enter Student ID and password.", "err");
-        return;
-      }
-
-      if (!saved || saved.password !== password) {
-        message(msg, "Invalid Student ID or password.", "err");
-        return;
-      }
-
-      setStudent(saved.student);
-      message(msg, "Login successful.", "ok");
-      renderCourseDashboard();
-    });
-
-    $("#createForm")?.addEventListener("submit", event => {
-      event.preventDefault();
-      const name = $("#createName").value.trim();
-      const phone = $("#createPhone").value.replace(/\D/g, "");
-      const email = $("#createEmail").value.trim().toLowerCase();
-      const password = $("#createPassword").value.trim();
-      const msg = $("#authMessage");
-
-      if (name.length < 2 || phone.length < 10 || !email.includes("@") || password.length < 4) {
-        message(msg, "Fill valid name, phone, email, and a 4+ character password.", "err");
-        return;
-      }
-
-      const student = { id: `stu_${Date.now()}`, studentId: phone, name, phone, email };
-      writeJson(`af_clean_account_${phone}`, { student, password });
-      setStudent(student);
-      message(msg, "Student ID created successfully.", "ok");
-      renderCourseDashboard();
-    });
-
-    $("#logoutBtn")?.addEventListener("click", logout);
-    $("#settingsLogoutBtn")?.addEventListener("click", logout);
-  }
-
-  function switchAuth(mode) {
-    $("#loginTab")?.classList.toggle("active", mode === "login");
-    $("#createTab")?.classList.toggle("active", mode === "create");
-    $("#loginForm")?.classList.toggle("hidden", mode !== "login");
-    $("#createForm")?.classList.toggle("hidden", mode !== "create");
-    message($("#authMessage"), "", "ok");
-  }
-
-  function renderCourseDashboard() {
-    const student = getStudent();
-    $("#authCard")?.classList.toggle("hidden", Boolean(student));
-    $("#courseDashboard")?.classList.toggle("hidden", !student);
-
-    if (!student) return;
-
-    $("#studentWelcome").textContent = `Welcome ${student.name}`;
-    const enrolled = readJson(STORE.courses, ["prompt-engineering"]);
-    $("#courseGrid").innerHTML = courses
-      .filter(course => enrolled.includes(course.id))
-      .map(course => `
-        <button class="course-card" type="button">
-          <span class="card-icon">${course.icon}</span>
-          <span><strong>${escapeHtml(course.title)}</strong><small>${escapeHtml(course.desc)}</small></span>
-        </button>
-      `).join("") || `<div class="mini-card"><strong>Oops!</strong><small>You are not enrolled in any batch. Enroll from the Batches section.</small></div>`;
-  }
-
-  function logout() {
-    setStudent(null);
-    renderCourseDashboard();
-    renderCommunity();
-    renderTestGate();
-    showSection("home");
-    toast("Logged out successfully.");
-  }
-
-  function syncStudentUI() {
-    const student = getStudent();
-    const name = student?.name || "Student";
-    const logged = Boolean(student);
-
-    $("#homeProfileName").textContent = logged ? `Hi, ${name}` : "Hi, Student";
-    $("#homeProfileSub").textContent = logged ? "View Profile" : "Login to view profile";
-    $("#settingsName").textContent = logged ? `Hi, ${name}` : "Hi, Student";
-  }
-
-  /* =========================================================
-     PROFILE / NAME EDIT / DELETE REQUEST
-  ========================================================== */
-  function renderProfile() {
-    const student = getStudent();
-    if (!student) {
-      showSection("student");
-      return;
-    }
-
-    $("#profileAvatar").textContent = student.name.charAt(0).toUpperCase();
-    $("#profileName").textContent = student.name;
-    $("#infoName").textContent = student.name;
-    $("#infoEmail").textContent = student.email;
-    $("#infoPhone").textContent = student.phone;
-
-    const enrolled = readJson(STORE.courses, ["prompt-engineering"]);
-    $("#profileBatchList").innerHTML = courses
-      .filter(course => enrolled.includes(course.id))
-      .map(course => `<div class="mini-card"><strong>${course.icon} ${escapeHtml(course.title)}</strong><small>Active</small></div>`)
-      .join("") || `<p class="mini-card">No enrolled course found.</p>`;
-  }
-
-  function initProfile() {
-    $("#editNameBtn")?.addEventListener("click", () => {
-      const student = getStudent();
-      if (!student) return;
-      $("#nameInput").value = student.name;
-      $("#nameModal").showModal();
-    });
-
-    $("#nameForm")?.addEventListener("submit", event => {
-      event.preventDefault();
-      const student = getStudent();
-      const name = $("#nameInput").value.trim().replace(/\s+/g, " ");
-      if (!student || name.length < 2) return;
-      setStudent({ ...student, name });
-      $("#nameModal").close();
-      renderProfile();
-      toast("Name updated successfully.");
-    });
-
-    $("#extraSettingsToggle")?.addEventListener("click", () => {
-      $("#extraSettingsBody")?.classList.toggle("hidden");
-    });
-
-    $("#deleteAccountBtn")?.addEventListener("click", () => {
-      openModal("Account Deletion Request", "Your deletion request has been recorded locally. In production, connect this button to your secure backend review workflow.");
-    });
-  }
-
-  /* =========================================================
-     BATCHES
-  ========================================================== */
-  function initBatches() {
-    $("#batchSearch")?.addEventListener("input", renderBatches);
-  }
-
-  function renderBatches() {
-    const query = ($("#batchSearch")?.value || "").trim().toLowerCase();
-    const enrolled = readJson(STORE.courses, ["prompt-engineering"]);
-    const list = courses.filter(course => `${course.title} ${course.desc}`.toLowerCase().includes(query));
-    $("#batchCount").textContent = `${list.length} batches available`;
-    $("#batchGrid").innerHTML = list.map(course => {
-      const isEnrolled = enrolled.includes(course.id);
-      return `
-        <article class="batch-card">
-          <div class="batch-art">${course.icon}</div>
-          <div class="batch-body">
-            <h3>${escapeHtml(course.title)}</h3>
-            <p>${escapeHtml(course.desc)}</p>
-            <div class="price-row"><strong>₹499</strong><del>₹999</del><span>50% OFF</span></div>
-            <button class="${isEnrolled ? "secondary-btn" : "primary-btn"} full" type="button" data-enroll="${course.id}" ${isEnrolled ? "disabled" : ""}>
-              ${isEnrolled ? "Already Enrolled" : "Enroll Now"}
-            </button>
-          </div>
-        </article>
-      `;
-    }).join("");
-
-    $$("[data-enroll]").forEach(button => {
-      button.addEventListener("click", () => enrollCourse(button.dataset.enroll));
-    });
-  }
-
-  function enrollCourse(courseId) {
-    if (!isLoggedIn()) {
-      toast("Please login first.");
-      showSection("student");
-      return;
-    }
-    const enrolled = new Set(readJson(STORE.courses, ["prompt-engineering"]));
-    enrolled.add(courseId);
-    writeJson(STORE.courses, Array.from(enrolled));
-    renderBatches();
-    renderCourseDashboard();
-    toast("Batch access added.");
-  }
-
-  /* =========================================================
-     COMMUNITY
-  ========================================================== */
-  function initCommunity() {
-    $("#postInput")?.addEventListener("input", () => {
-      $("#postCount").textContent = `${words($("#postInput").value)} / 80 words`;
-    });
-
-    $("#postForm")?.addEventListener("submit", event => {
-      event.preventDefault();
-      const student = getStudent();
-      const input = $("#postInput");
-      const content = input.value.trim();
-      if (!student) return;
-      if (!content || words(content) > 80) {
-        toast("Post must be between 1 and 80 words.");
-        return;
-      }
-      const posts = readJson(STORE.posts, []);
-      posts.unshift({ id: Date.now(), studentId: student.id, name: student.name, content, likes: 0, createdAt: new Date().toISOString() });
-      writeJson(STORE.posts, posts);
-      input.value = "";
-      $("#postCount").textContent = "0 / 80 words";
-      renderCommunity();
-    });
-
-    $$("[data-feed]").forEach(button => {
-      button.addEventListener("click", () => {
-        activeFeed = button.dataset.feed;
-        $$("[data-feed]").forEach(btn => btn.classList.toggle("active", btn === button));
-        renderPosts();
-      });
-    });
-  }
-
-  function renderCommunity() {
-    const logged = isLoggedIn();
-    $("#communityLocked")?.classList.toggle("hidden", logged);
-    $("#communityMain")?.classList.toggle("hidden", !logged);
-    if (logged) renderPosts();
-  }
-
-  function renderPosts() {
-    const student = getStudent();
-    const all = readJson(STORE.posts, []);
-    const posts = activeFeed === "mine" ? all.filter(post => post.studentId === student?.id) : all;
-    $("#postsList").innerHTML = posts.map(post => `
-      <article class="post-card">
-        <div class="post-top">
-          <div><strong>${escapeHtml(post.name)}</strong><small>${new Date(post.createdAt).toLocaleString()}</small></div>
-          ${post.studentId === student?.id ? `<button class="small-btn" type="button" data-delete-post="${post.id}">Delete</button>` : ""}
-        </div>
-        <p>${escapeHtml(post.content)}</p>
-        <div class="post-actions"><button type="button" data-like-post="${post.id}">❤️ ${post.likes || 0}</button></div>
-      </article>
-    `).join("") || `<div class="mini-card"><strong>No posts yet.</strong><small>Start the first discussion.</small></div>`;
-
-    $$("[data-like-post]").forEach(button => button.addEventListener("click", () => {
-      const posts = readJson(STORE.posts, []);
-      const post = posts.find(item => String(item.id) === String(button.dataset.likePost));
-      if (post) post.likes = Number(post.likes || 0) + 1;
-      writeJson(STORE.posts, posts);
-      renderPosts();
-    }));
-
-    $$("[data-delete-post]").forEach(button => button.addEventListener("click", () => {
-      const posts = readJson(STORE.posts, []).filter(item => String(item.id) !== String(button.dataset.deletePost));
-      writeJson(STORE.posts, posts);
-      renderPosts();
-    }));
-  }
-
-  /* =========================================================
-     TEST ARENA
-  ========================================================== */
-  function renderTestGate() {
-    const logged = isLoggedIn();
-    $("#testLocked")?.classList.toggle("hidden", logged);
-    $("#testMain")?.classList.toggle("hidden", !logged);
-    if (logged) startTestPreview();
-  }
-
-  function startTestPreview() {
-    activeTestQuestion = 0;
-    testAnswers = {};
-    renderQuestion();
-  }
-
-  function renderQuestion() {
-    const q = testQuestions[activeTestQuestion];
-    if (!q) return renderTestResult();
-
-    $("#testArea").innerHTML = `
-      <div class="question-card">
-        <strong>Question ${activeTestQuestion + 1} of ${testQuestions.length}</strong>
-        <h3>${escapeHtml(q.q)}</h3>
-        <div class="option-grid">
-          ${q.options.map((option, index) => `<button type="button" data-option="${index}" class="${testAnswers[activeTestQuestion] === index ? "active" : ""}">${escapeHtml(option)}</button>`).join("")}
-        </div>
-        <div class="modal-actions" style="margin-top:12px">
-          <button class="secondary-btn" type="button" id="prevQuestion" ${activeTestQuestion === 0 ? "disabled" : ""}>Previous</button>
-          <button class="primary-btn" type="button" id="nextQuestion">${activeTestQuestion === testQuestions.length - 1 ? "Submit" : "Next"}</button>
-        </div>
-      </div>
-    `;
-
-    $$("[data-option]").forEach(button => button.addEventListener("click", () => {
-      testAnswers[activeTestQuestion] = Number(button.dataset.option);
-      renderQuestion();
-    }));
-    $("#prevQuestion")?.addEventListener("click", () => {
-      activeTestQuestion = Math.max(0, activeTestQuestion - 1);
-      renderQuestion();
-    });
-    $("#nextQuestion")?.addEventListener("click", () => {
-      activeTestQuestion += 1;
-      renderQuestion();
-    });
-  }
-
-  function renderTestResult() {
-    const score = testQuestions.reduce((total, q, index) => total + (testAnswers[index] === q.answer ? 1 : 0), 0);
-    $("#testArea").innerHTML = `
-      <div class="question-card">
-        <h3>Test Submitted</h3>
-        <p>Your score is <strong>${score}/${testQuestions.length}</strong>.</p>
-        <button class="primary-btn full" type="button" id="restartTest">Try Again</button>
-      </div>
-    `;
-    $("#restartTest")?.addEventListener("click", startTestPreview);
-  }
-
-  /* =========================================================
-     NOTIFICATIONS / HEATMAP / REQUESTS
-  ========================================================== */
-  function renderNotifications(markSeen = false) {
-    $("#notificationsList").innerHTML = notifications.map(item => `
-      <div class="mini-card">
-        <strong>${escapeHtml(item.title)}</strong>
-        <small>${escapeHtml(item.type)} · ${escapeHtml(item.date)}</small>
-        <p>${escapeHtml(item.message)}</p>
-      </div>
-    `).join("");
-
-    if (markSeen) {
-      localStorage.setItem(STORE.notificationsSeen, "yes");
-      $("#notificationDot")?.classList.add("hidden");
-    }
-  }
-
-  function initHeatmap() {
-    $("#refreshHeatmap")?.addEventListener("click", renderHeatmap);
-    window.setTimeout(markActivity, 10000);
-  }
-
-  function markActivity() {
-    if (!isLoggedIn()) return;
-    const activity = readJson(STORE.activity, {});
-    const today = new Date().toISOString().slice(0, 10);
-    activity[today] = true;
-    writeJson(STORE.activity, activity);
-    renderHeatmap();
-  }
-
-  function renderHeatmap() {
-    const activity = readJson(STORE.activity, {});
-    const days = getCurrentWeekDays();
-    const streak = calculateStreak(activity);
-    $("#headerStreak").textContent = streak;
-    $("#heatmapStreak").textContent = streak;
-    $("#heatmapStatus").textContent = streak ? `Current streak: ${streak} day(s).` : "Use the app for 10 seconds today.";
-    $("#weekGrid").innerHTML = days.map(day => `
-      <div class="day-box ${activity[day.key] ? "active" : ""}">
-        <span>${day.label}</span>
-        <strong>${activity[day.key] ? "✓" : "-"}</strong>
-      </div>
-    `).join("");
-  }
-
-  function getCurrentWeekDays() {
-    const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const now = new Date();
-    const monday = new Date(now);
-    const day = (now.getDay() + 6) % 7;
-    monday.setDate(now.getDate() - day);
-    return labels.map((label, index) => {
-      const date = new Date(monday);
-      date.setDate(monday.getDate() + index);
-      return { label, key: date.toISOString().slice(0, 10) };
-    });
-  }
-
-  function calculateStreak(activity) {
-    let streak = 0;
-    const cursor = new Date();
-    for (let i = 0; i < 365; i += 1) {
-      const key = cursor.toISOString().slice(0, 10);
-      if (!activity[key]) break;
-      streak += 1;
-      cursor.setDate(cursor.getDate() - 1);
-    }
-    return streak;
-  }
-
-  function initRequests() {
-    $("#bugReportBtn")?.addEventListener("click", () => {
-      const requests = readJson(STORE.requests, []);
-      requests.unshift({ type: "Bug Report", title: "Bug report", message: "Bug report opened from settings.", status: "Pending", date: new Date().toISOString() });
-      writeJson(STORE.requests, requests);
-      toast("Bug report recorded locally.");
-    });
-
-    $("#contactForm")?.addEventListener("submit", event => {
-      event.preventDefault();
-      const requests = readJson(STORE.requests, []);
-      requests.unshift({
-        type: "Contact",
-        title: $("#contactReason").value,
-        message: $("#contactProblem").value.trim(),
-        status: "Pending",
-        date: new Date().toISOString()
-      });
-      writeJson(STORE.requests, requests);
-      event.target.reset();
-      toast("Contact request submitted locally.");
-      showSection("requestStatus");
-    });
-  }
-
-  function renderRequests() {
-    const requests = readJson(STORE.requests, []);
-    $("#requestStatusList").innerHTML = requests.map(req => `
-      <div class="mini-card">
-        <strong>${escapeHtml(req.title)}</strong>
-        <small>${escapeHtml(req.type)} · ${new Date(req.date).toLocaleString()}</small>
-        <p>${escapeHtml(req.message)}</p>
-        <small>Status: ${escapeHtml(req.status)}</small>
-      </div>
-    `).join("") || `<div class="mini-card"><strong>No request found.</strong><small>Your bug/contact requests will appear here.</small></div>`;
-  }
-
-  function openModal(title, text) {
-    $("#genericTitle").textContent = title;
-    $("#genericText").textContent = text;
-    $("#genericModal").showModal();
-  }
-
-  function initModal() {
-    $("#genericClose")?.addEventListener("click", () => $("#genericModal").close());
-  }
-
-  /* =========================================================
-     INIT
-  ========================================================== */
-  document.addEventListener("DOMContentLoaded", () => {
-    initSplash();
-    initTheme();
-    initBanner();
-    bindNavigation();
-    initAuth();
-    initProfile();
-    initBatches();
-    initCommunity();
-    initHeatmap();
-    initRequests();
-    initModal();
-
-    if (!localStorage.getItem(STORE.notificationsSeen)) {
-      $("#notificationDot")?.classList.remove("hidden");
-    }
-
-    syncStudentUI();
-    renderCourseDashboard();
-    renderBatches();
-    renderHeatmap();
-    renderNotifications(false);
-
-    const hash = location.hash.replace("#", "");
-    if (hash && document.getElementById(hash)) showSection(hash);
-  });
-})();
-
-</script>
+    <script src="script.js"></script>
+    
+    <script>
+        // Simple Ko-fi widget functions
+        function showKofiWidget() {
+            const widget = document.getElementById('floatingKofi');
+            if (widget) {
+                widget.classList.remove('hidden');
+                
+                // Auto-hide after 12 seconds
+                setTimeout(() => {
+                    hideKofiWidget();
+                }, 12000);
+            }
+        }
+        
+        function hideKofiWidget() {
+            const widget = document.getElementById('floatingKofi');
+            if (widget && !widget.classList.contains('hidden')) {
+                widget.style.animation = 'slideOutRight 0.5s ease-in';
+                setTimeout(() => {
+                    widget.classList.add('hidden');
+                    widget.style.animation = '';
+                }, 500);
+            }
+        }
+        
+        function closeKofiWidget() {
+            hideKofiWidget();
+        }
+    </script>
 </body>
 </html>
