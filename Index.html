@@ -1,295 +1,1222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebView APK Builder</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="apple-touch-icon" href="/logo192.png"/>
-    <link rel="icon" href="/favicon.ico"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcademeForge Scholars Test (AST) – Identify Talent. Reward Excellence.</title>
+  <meta name="description" content="AcademeForge Scholars Test (AST) is a National Scholarship and Talent Identification Examination for Students from Classes 1–10. Register now for scholarships, medals, and national recognition." />
+  <meta name="keywords" content="AST, AcademeForge Scholars Test, scholarship exam, talent identification, national scholarship, classes 1-10, student exam" />
+  <meta property="og:title" content="AcademeForge Scholars Test (AST)" />
+  <meta property="og:description" content="National Scholarship and Talent Identification Examination for Students from Classes 1–10." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="IMG/AST.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="IMG/AST.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h1>WebView APK Builder</h1>
-                </div>
-                <p class="subtitle">Convert any website into an Android APK with customizable branding</p>
-                <div class="header-donate">
-                    <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-header">
-                        <i class="fas fa-coffee"></i>
-                        Support this project
-                    </a>
-                </div>
-            </div>
-        </header>
 
-        <main class="main-content">
-            <div class="builder-card">
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-progress"></div>
 
-                <form id="apkForm" class="apk-form">
-                    <div class="form-section">
-                        <h2><i class="fas fa-globe"></i> Website Configuration</h2>
-                        
-                        <div class="input-group">
-                            <label for="websiteUrl">Website URL</label>
-                            <input 
-                                type="url" 
-                                id="websiteUrl" 
-                                name="websiteUrl" 
-                                placeholder="https://example.com" 
-                                required
-                            >
-                            <small class="input-help">Enter the full URL of the website you want to convert</small>
-                        </div>
-                    </div>
+<!-- DARK MODE TOGGLE -->
+<button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <span class="toggle-track">
+    <span class="toggle-thumb">
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+    </span>
+  </span>
+</button>
 
-                    <div class="form-section">
-                        <h2><i class="fas fa-paint-brush"></i> App Branding</h2>
-                        
-                        <div class="input-group">
-                            <label for="appName">App Name</label>
-                            <input 
-                                type="text" 
-                                id="appName" 
-                                name="appName" 
-                                placeholder="My Awesome App" 
-                                maxlength="30"
-                                required
-                            >
-                            <small class="input-help">This will appear as the app name on the device</small>
-                        </div>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo">
+      <img src="IMG/AST.svg" alt="AST Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+      <span class="logo-text-fallback" style="display:none">
+        <span class="logo-badge">AST</span>
+      </span>
+      <div class="logo-text">
+        <span class="logo-title">AcademeForge</span>
+        <span class="logo-sub">Scholars Test</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#exam" class="nav-link">Exam</a></li>
+      <li><a href="#scholarships" class="nav-link">Scholarships</a></li>
+      <li><a href="#results" class="nav-link">Results</a></li>
+      <li><a href="#faq" class="nav-link">FAQ</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li><a href="#register" class="nav-link btn-register">Register Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-                        <div class="input-group">
-                            <label for="icon">App Icon</label>
-                            <div class="file-upload">
-                                <input 
-                                    type="file" 
-                                    id="icon" 
-                                    name="icon" 
-                                    accept="image/*"
-                                    required
-                                >
-                                <div class="file-upload-display">
-                                    <div class="file-upload-placeholder">
-                                        <i class="fas fa-image"></i>
-                                        <span>Click to select app icon</span>
-                                    </div>
-                                    <div class="file-upload-preview hidden">
-                                        <img id="iconPreview" src="" alt="Icon preview">
-                                        <span id="fileName"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <small class="input-help">Upload a square image (PNG/JPG, max 5MB). Recommended: 512x512px</small>
-                        </div>
-                    </div>
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-overlay" id="mobile-overlay"></div>
 
-                    <div class="form-section">
-                        <h2><i class="fas fa-cog"></i> App Configuration</h2>
-                        
-                        <div class="input-group">
-                            <label for="packageName">Package Name</label>
-                            <input 
-                                type="text" 
-                                id="packageName" 
-                                name="packageName" 
-                                placeholder="com.example.myapp" 
-                                pattern="^[a-zA-Z][a-zA-Z0-9]*(\.[a-zA-Z][a-zA-Z0-9]*)+$"
-                                required
-                            >
-                            <small class="input-help">Unique identifier (e.g., com.yourcompany.appname)</small>
-                        </div>
+<!-- ==================== HOME ==================== -->
+<section id="home" class="hero-section">
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge animate-fade-up">
+      <i class="fas fa-star"></i> National Scholarship Examination 2025
+    </div>
+    <h1 class="hero-title animate-fade-up delay-1">
+      <span class="gradient-text">AcademeForge</span><br/>Scholars Test
+      <span class="hero-acronym">(AST)</span>
+    </h1>
+    <p class="hero-subtitle animate-fade-up delay-2">
+      A National Scholarship and Talent Identification Examination<br class="hide-mobile"/> for Students from <strong>Classes 1–10</strong>
+    </p>
+    <p class="hero-tagline animate-fade-up delay-3">
+      <em>Identify Talent. Reward Excellence. Empower Future Leaders.</em>
+    </p>
+    <div class="hero-cta animate-fade-up delay-4">
+      <a href="#register" class="btn btn-primary btn-lg">
+        <i class="fas fa-user-graduate"></i> Register as Student
+      </a>
+      <a href="#institution-register" class="btn btn-outline btn-lg">
+        <i class="fas fa-school"></i> Register as Institution
+      </a>
+    </div>
+    <div class="hero-countdown animate-fade-up delay-5">
+      <div class="countdown-label"><i class="fas fa-clock"></i> Exam Registration Closes In:</div>
+      <div class="countdown-timer" id="countdown">
+        <div class="countdown-item"><span id="cd-days">00</span><label>Days</label></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item"><span id="cd-hours">00</span><label>Hours</label></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item"><span id="cd-mins">00</span><label>Mins</label></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item"><span id="cd-secs">00</span><label>Secs</label></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-primary)"/></svg>
+  </div>
+</section>
 
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="versionName">Version Name</label>
-                                <input 
-                                    type="text" 
-                                    id="versionName" 
-                                    name="versionName" 
-                                    placeholder="1.0.0" 
-                                    pattern="^\d+\.\d+\.\d+$"
-                                    required
-                                >
-                                <small class="input-help">User-visible version (e.g., 1.0.0)</small>
-                            </div>
+<!-- STATS COUNTER -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#2563EB,#7C3AED)"><i class="fas fa-users"></i></div>
+        <div class="stat-number" data-target="50000">0</div>
+        <div class="stat-label">Students Participated</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#7C3AED,#06B6D4)"><i class="fas fa-school"></i></div>
+        <div class="stat-number" data-target="1200">0</div>
+        <div class="stat-label">Partner Institutions</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#06B6D4,#10B981)"><i class="fas fa-trophy"></i></div>
+        <div class="stat-number" data-target="5000">0</div>
+        <div class="stat-label">Scholarships Awarded</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#10B981,#F59E0B)"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="stat-number" data-target="350">0</div>
+        <div class="stat-label">Cities Reached</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                            <div class="input-group">
-                                <label for="versionCode">Version Code</label>
-                                <input 
-                                    type="number" 
-                                    id="versionCode" 
-                                    name="versionCode" 
-                                    placeholder="1" 
-                                    min="1"
-                                    required
-                                >
-                                <small class="input-help">Internal version number</small>
-                            </div>
-                        </div>
-                    </div>
+<!-- FEATURES GRID -->
+<section class="features-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">What We Offer</span>
+      <h2>Everything a <span class="gradient-text">Scholar Deserves</span></h2>
+      <p>AST provides a complete ecosystem for identifying and rewarding academic talent across India.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+        <h3>National Recognition</h3>
+        <p>Get recognized across India with national rank certificates and merit awards acknowledged by top institutions.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-rupee-sign"></i></div>
+        <h3>Scholarships</h3>
+        <p>Win cash scholarships ranging from ₹1,000 to ₹50,000 based on your rank at district, state, and national levels.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-scroll"></i></div>
+        <h3>Certificates & Medals</h3>
+        <p>Earn gold, silver, and bronze medals plus official participation and merit certificates downloadable instantly.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+        <h3>Skill Assessment</h3>
+        <p>Comprehensive evaluation across Mathematics, Science, English, Hindi, and Drawing for holistic development.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Performance Analytics</h3>
+        <p>Detailed subject-wise performance report with percentile ranking and improvement suggestions.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Academic Excellence</h3>
+        <p>Build a strong academic portfolio with AST credentials that strengthen competitive exam applications.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <button type="submit" class="build-button" id="buildButton">
-                        <i class="fas fa-rocket"></i>
-                        <span>Build APK</span>
-                    </button>
-                </form>
+<!-- WHY CHOOSE AST -->
+<section class="why-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Why AST</span>
+      <h2>Why Choose <span class="gradient-text">AcademeForge AST?</span></h2>
+      <p>Join thousands of students who've accelerated their academic journey through AST.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">01</div>
+        <div class="why-icon"><i class="fas fa-globe-asia"></i></div>
+        <h3>Pan-India Reach</h3>
+        <p>Compete with students from across 350+ cities and 28 states on a single unified platform.</p>
+      </div>
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">02</div>
+        <div class="why-icon"><i class="fas fa-laptop"></i></div>
+        <h3>Flexible Exam Mode</h3>
+        <p>Choose between Online, Offline, or Hybrid exam modes through your registered center.</p>
+      </div>
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">03</div>
+        <div class="why-icon"><i class="fas fa-lock"></i></div>
+        <h3>Secure & Transparent</h3>
+        <p>AI-powered proctoring, automated evaluation, and tamper-proof result declaration system.</p>
+      </div>
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">04</div>
+        <div class="why-icon"><i class="fas fa-gift"></i></div>
+        <h3>Reward-Rich Platform</h3>
+        <p>Gift boxes, trophies, medals, certificates, and cash prizes for top performers at every level.</p>
+      </div>
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">05</div>
+        <div class="why-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Expert-Curated Syllabus</h3>
+        <p>Aligned with CBSE, ICSE, and state board syllabi — no extra preparation burden.</p>
+      </div>
+      <div class="why-card animate-on-scroll">
+        <div class="why-num">06</div>
+        <div class="why-icon"><i class="fas fa-headset"></i></div>
+        <h3>Dedicated Support</h3>
+        <p>24/7 helpdesk, WhatsApp support, and dedicated school coordinators for seamless experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <div id="buildStatus" class="build-status hidden">
-                    <div class="status-content">
-                        <div class="spinner"></div>
-                        <p id="statusMessage">Building your APK...</p>
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <div class="progress-info">
-                                <span id="progressText">Preparing build...</span>
-                                <span id="estimatedTime">Estimated time: calculating...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- HOW IT WORKS -->
+<section class="how-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Simple Process</span>
+      <h2>How AST <span class="gradient-text">Works</span></h2>
+    </div>
+    <div class="steps-container">
+      <div class="step animate-on-scroll">
+        <div class="step-circle">1</div>
+        <div class="step-content">
+          <h3>Register Online</h3>
+          <p>Fill the student registration form with personal and academic details. Get instant confirmation.</p>
+        </div>
+      </div>
+      <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+      <div class="step animate-on-scroll">
+        <div class="step-circle">2</div>
+        <div class="step-content">
+          <h3>Take the Exam</h3>
+          <p>Appear in the online/offline exam at your registered center on the scheduled date.</p>
+        </div>
+      </div>
+      <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+      <div class="step animate-on-scroll">
+        <div class="step-circle">3</div>
+        <div class="step-content">
+          <h3>Evaluation</h3>
+          <p>Papers evaluated by AI and expert faculty ensuring fair, unbiased grading.</p>
+        </div>
+      </div>
+      <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+      <div class="step animate-on-scroll">
+        <div class="step-circle">4</div>
+        <div class="step-content">
+          <h3>Results Declared</h3>
+          <p>Check your rank, score, and percentile on the results portal with downloadable report.</p>
+        </div>
+      </div>
+      <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+      <div class="step animate-on-scroll">
+        <div class="step-circle">5</div>
+        <div class="step-content">
+          <h3>Scholarships & Awards</h3>
+          <p>Winners receive medals, trophies, certificates, and cash scholarships at award ceremony.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <div id="buildResult" class="build-result hidden">
-                    <div class="result-success">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>APK Generated Successfully!</h3>
-                        <p>Your APK has been built and is ready for download and installation.</p>
-                        <div class="download-section">
-                            <a href="#" id="downloadLink" class="download-button">
-                                <i class="fas fa-download"></i>
-                                <span>Download APK</span>
-                            </a>
-                            
-                            <div class="success-donate">
-                                <p class="donate-message">🎉 <strong>Awesome!</strong> Your APK is ready!</p>
-                                <p class="donate-sub">If this tool helped you, consider supporting our work:</p>
-                                <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-success">
-                                    <i class="fas fa-heart"></i>
-                                    Buy us a coffee ☕
-                                </a>
-                            </div>
-                        </div>
-                        <div class="build-instructions">
-                            <h4>Installation Instructions:</h4>
-                            <ol>
-                                <li>Download the APK file to your Android device</li>
-                                <li>Enable "Unknown sources" in your device settings</li>
-                                <li>Open the APK file to install the app</li>
-                                <li>Launch your new app from the home screen</li>
-                            </ol>
-                            <div class="apk-info">
-                                <h5>APK Details:</h5>
-                                <ul>
-                                    <li>✅ Ready for installation on Android 5.0+</li>
-                                    <li>✅ WebView with JavaScript support</li>
-                                    <li>✅ Custom app icon and branding</li>
-                                    <li>✅ Back button navigation</li>
-                                    <li>✅ Data persistence (saves user data, login sessions, etc.)</li>
-                                    <li>✅ Hardware acceleration for smooth performance</li>
-                                    <li>✅ Auto backup and restore capabilities</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- TESTIMONIALS -->
+<section class="testimonials-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Success Stories</span>
+      <h2>What Our <span class="gradient-text">Scholars Say</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card animate-on-scroll">
+        <div class="stars">★★★★★</div>
+        <p>"AST changed my life! I won the National Rank 3 and received a ₹25,000 scholarship. The exam was well-structured and fair."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div><strong>Aarav Sharma</strong><br/><small>Class 8 – National Rank 3, Delhi</small></div>
+        </div>
+      </div>
+      <div class="testimonial-card animate-on-scroll">
+        <div class="stars">★★★★★</div>
+        <p>"My daughter participated in AST and it boosted her confidence tremendously. The performance analytics report was very insightful."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">P</div>
+          <div><strong>Priya Mehta</strong><br/><small>Parent – Mumbai</small></div>
+        </div>
+      </div>
+      <div class="testimonial-card animate-on-scroll">
+        <div class="stars">★★★★★</div>
+        <p>"As a school principal, registering as an AST partner center was the best decision. Our students are motivated and performing better."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div><strong>Dr. Rajesh Kumar</strong><br/><small>Principal, Sunrise Academy – Patna</small></div>
+        </div>
+      </div>
+      <div class="testimonial-card animate-on-scroll">
+        <div class="stars">★★★★★</div>
+        <p>"The online registration was seamless. Got my roll number instantly and the admit card was downloadable right away. Excellent system!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div><strong>Sneha Patel</strong><br/><small>Class 6 – State Rank 1, Gujarat</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="info-section">
-                <div class="info-cards">
-                    <div class="info-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Secure & Private</h3>
-                        <p>All processing is done server-side. No data is stored permanently.</p>
-                    </div>
-                    <div class="info-card">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>Native Experience</h3>
-                        <p>Creates a true Android app with data persistence and native performance.</p>
-                    </div>
-                    <div class="info-card">
-                        <i class="fas fa-download"></i>
-                        <h3>Direct APK Build</h3>
-                        <p>Get a ready-to-install APK file directly, no additional tools needed.</p>
-                    </div>
-                </div>
+<!-- CTA BANNER -->
+<section class="cta-banner section">
+  <div class="container">
+    <div class="cta-box animate-on-scroll">
+      <div class="cta-content">
+        <h2>Ready to Discover Your Child's Potential?</h2>
+        <p>Join 50,000+ students who've already registered for AST 2025. Registrations are now open!</p>
+        <div class="cta-buttons">
+          <a href="#register" class="btn btn-white btn-lg">
+            <i class="fas fa-rocket"></i> Register Now – It's Free!
+          </a>
+          <a href="#institution-register" class="btn btn-outline-white btn-lg">
+            <i class="fas fa-handshake"></i> Partner with Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <div class="features">
-                    <h3>Features Included:</h3>
-                    <ul>
-                        <li><i class="fas fa-check"></i> WebView with JavaScript support</li>
-                        <li><i class="fas fa-check"></i> Back button navigation</li>
-                        <li><i class="fas fa-check"></i> Custom app icon and name</li>
-                        <li><i class="fas fa-check"></i> Data persistence (LocalStorage, SessionStorage, Cookies)</li>
-                        <li><i class="fas fa-check"></i> Automatic backup and restore</li>
-                        <li><i class="fas fa-check"></i> Hardware acceleration</li>
-                        <li><i class="fas fa-check"></i> Portrait orientation lock</li>
-                        <li><i class="fas fa-check"></i> Modern Android compatibility (API 21+)</li>
-                    </ul>
-                </div>
+<!-- ==================== ABOUT ==================== -->
+<section id="about" class="about-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">About AST</span>
+      <h2>About <span class="gradient-text">AcademeForge Scholars Test</span></h2>
+    </div>
+    <div class="about-intro animate-on-scroll">
+      <p>The <strong>AcademeForge Scholars Test (AST)</strong> is a premier national-level scholarship and talent identification examination designed for students studying in Classes 1 through 10. Founded with the vision of discovering hidden academic talent across every corner of India, AST provides equal opportunity to every student — regardless of their school board, region, or socioeconomic background.</p>
+    </div>
+    <div class="mvg-grid">
+      <div class="mvg-card animate-on-scroll">
+        <div class="mvg-icon"><i class="fas fa-bullseye"></i></div>
+        <h3>Our Mission</h3>
+        <p>To identify, nurture, and reward academic talent across India through a fair, transparent, and comprehensive scholarship examination that empowers students to achieve their fullest potential.</p>
+      </div>
+      <div class="mvg-card animate-on-scroll">
+        <div class="mvg-icon"><i class="fas fa-eye"></i></div>
+        <h3>Our Vision</h3>
+        <p>To become India's most trusted and impactful scholarship platform, where every deserving student gets recognized and every bright mind finds its path to excellence.</p>
+      </div>
+      <div class="mvg-card animate-on-scroll">
+        <div class="mvg-icon"><i class="fas fa-list-check"></i></div>
+        <h3>Our Objectives</h3>
+        <ul>
+          <li>Identify top academic talent at grass-root levels</li>
+          <li>Provide financial support through scholarships</li>
+          <li>Build confidence and competitive readiness</li>
+          <li>Create a national network of scholars</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Timeline -->
+    <div class="section-header animate-on-scroll" style="margin-top:4rem">
+      <h3>AST <span class="gradient-text">Timeline 2025</span></h3>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item animate-on-scroll">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-date">Jan 2025</div>
+          <h4>Registration Opens</h4>
+          <p>Online registrations begin for all students Classes 1–10.</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-scroll">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-date">Mar 2025</div>
+          <h4>Admit Card Release</h4>
+          <p>Download admit cards from the student portal.</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-scroll">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-date">Apr 2025</div>
+          <h4>Examination Day</h4>
+          <p>Online and offline examinations conducted across India.</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-scroll">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-date">May 2025</div>
+          <h4>Results Declared</h4>
+          <p>Results published on the portal with detailed analytics.</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-scroll">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-date">Jun 2025</div>
+          <h4>Award Ceremony</h4>
+          <p>National award ceremony and scholarship distribution.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <div class="queue-status-section">
-                    <h3>Build Queue Status:</h3>
-                    <div id="queueStatus" class="queue-status">
-                        <div class="queue-item">
-                            <i class="fas fa-server"></i>
-                            <span>Loading queue status...</span>
-                        </div>
-                    </div>
-                    <small class="queue-help">
-                        Our server can build up to 4 apps simultaneously. Additional requests are queued and processed in order.
-                    </small>
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <div class="footer-content">
-                <p>&copy; 2025 Amethyst Lab. Built with ❤️ for people.</p>
-                <a href="https://ko-fi.com/amethystlab" target="_blank" class="donate-button-footer">
-                    <i class="fas fa-coffee"></i>
-                    Support Us on Ko-fi
-                </a>
-            </div>
-        </footer>
+<!-- ==================== EXAM DETAILS ==================== -->
+<section id="exam" class="exam-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Exam Details</span>
+      <h2>Exam <span class="gradient-text">Information</span></h2>
+      <p>Everything you need to know about the AST examination.</p>
     </div>
 
-    <script src="script.js"></script>
-    
-    <script>
-        // Simple Ko-fi widget functions
-        function showKofiWidget() {
-            const widget = document.getElementById('floatingKofi');
-            if (widget) {
-                widget.classList.remove('hidden');
-                
-                // Auto-hide after 12 seconds
-                setTimeout(() => {
-                    hideKofiWidget();
-                }, 12000);
-            }
-        }
-        
-        function hideKofiWidget() {
-            const widget = document.getElementById('floatingKofi');
-            if (widget && !widget.classList.contains('hidden')) {
-                widget.style.animation = 'slideOutRight 0.5s ease-in';
-                setTimeout(() => {
-                    widget.classList.add('hidden');
-                    widget.style.animation = '';
-                }, 500);
-            }
-        }
-        
-        function closeKofiWidget() {
-            hideKofiWidget();
-        }
-    </script>
+    <div class="exam-overview-grid">
+      <div class="exam-info-card animate-on-scroll">
+        <i class="fas fa-users"></i>
+        <h4>Eligibility</h4>
+        <p>All students currently enrolled in Classes 1 to 10 in any recognized school in India.</p>
+      </div>
+      <div class="exam-info-card animate-on-scroll">
+        <i class="fas fa-book"></i>
+        <h4>Subjects</h4>
+        <p>Mathematics, Science, English, Hindi, Drawing (student can choose applicable subjects).</p>
+      </div>
+      <div class="exam-info-card animate-on-scroll">
+        <i class="fas fa-laptop-code"></i>
+        <h4>Exam Mode</h4>
+        <p>Online (mandatory for individual students). Institutions may offer offline/hybrid modes.</p>
+      </div>
+      <div class="exam-info-card animate-on-scroll">
+        <i class="fas fa-language"></i>
+        <h4>Language</h4>
+        <p>Available in English and Hindi. Students may choose their preferred language.</p>
+      </div>
+    </div>
+
+    <!-- Exam Pattern Table -->
+    <div class="table-section animate-on-scroll">
+      <h3>Exam Pattern</h3>
+      <div class="table-wrapper">
+        <table class="ast-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Questions</th>
+              <th>Duration</th>
+              <th>Total Marks</th>
+              <th>Negative Marking</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Mathematics</td><td>40</td><td>60 mins</td><td>40</td><td>No</td></tr>
+            <tr><td>Science</td><td>40</td><td>60 mins</td><td>40</td><td>No</td></tr>
+            <tr><td>English</td><td>30</td><td>45 mins</td><td>30</td><td>No</td></tr>
+            <tr><td>Hindi</td><td>30</td><td>45 mins</td><td>30</td><td>No</td></tr>
+            <tr><td>Drawing</td><td>20</td><td>30 mins</td><td>20</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Syllabus Accordion -->
+    <div class="syllabus-section animate-on-scroll">
+      <h3>Class-wise Syllabus</h3>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-btn">Classes 1–2: Foundation Level <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-content">
+            <p><strong>Mathematics:</strong> Numbers 1–100, Addition, Subtraction, Shapes, Patterns<br/>
+            <strong>English:</strong> Alphabet, Phonics, Simple words, Reading, Comprehension<br/>
+            <strong>Hindi:</strong> Varnamala, Simple words, Reading<br/>
+            <strong>Drawing:</strong> Basic shapes, Colouring, Pattern drawing</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">Classes 3–5: Elementary Level <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-content">
+            <p><strong>Mathematics:</strong> Multiplication, Division, Fractions, Geometry basics, Measurement<br/>
+            <strong>Science:</strong> Plants, Animals, Human body, Environment, Weather<br/>
+            <strong>English:</strong> Grammar, Comprehension, Essay, Letter writing<br/>
+            <strong>Hindi:</strong> Vyakaran, Nibandh, Kahani lekhan</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">Classes 6–8: Middle Level <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-content">
+            <p><strong>Mathematics:</strong> Algebra, Ratio, Percentage, Geometry, Statistics<br/>
+            <strong>Science:</strong> Physics, Chemistry, Biology fundamentals<br/>
+            <strong>English:</strong> Literature, Advanced Grammar, Writing skills<br/>
+            <strong>Hindi:</strong> Sahitya, Vyakaran, Patra lekhan</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">Classes 9–10: Advanced Level <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-content">
+            <p><strong>Mathematics:</strong> Quadratics, Trigonometry, Coordinate Geometry, Probability<br/>
+            <strong>Science:</strong> Mechanics, Chemical Reactions, Genetics, Electricity<br/>
+            <strong>English:</strong> Board-level grammar, Creative writing, Analysis<br/>
+            <strong>Hindi:</strong> Board-level Hindi literature and grammar</p>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="btn btn-primary" style="margin-top:1.5rem">
+        <i class="fas fa-download"></i> Download Full Syllabus PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCHOLARSHIPS ==================== -->
+<section id="scholarships" class="scholarships-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Scholarships & Awards</span>
+      <h2>Win Big. <span class="gradient-text">Dream Bigger.</span></h2>
+      <p>AST offers one of India's most rewarding scholarship structures for young academics.</p>
+    </div>
+
+    <div class="scholarship-categories">
+      <div class="scholarship-card national animate-on-scroll">
+        <div class="scholarship-badge"><i class="fas fa-crown"></i></div>
+        <h3>National Rank Awards</h3>
+        <div class="award-list">
+          <div class="award-item gold"><i class="fas fa-medal"></i> Rank 1 — ₹50,000 + Gold Medal + Trophy</div>
+          <div class="award-item silver"><i class="fas fa-medal"></i> Rank 2 — ₹30,000 + Silver Medal</div>
+          <div class="award-item bronze"><i class="fas fa-medal"></i> Rank 3 — ₹20,000 + Bronze Medal</div>
+          <div class="award-item"><i class="fas fa-certificate"></i> Rank 4–10 — ₹10,000 + Certificate</div>
+          <div class="award-item"><i class="fas fa-star"></i> Rank 11–50 — ₹5,000 + Merit Certificate</div>
+        </div>
+      </div>
+      <div class="scholarship-card state animate-on-scroll">
+        <div class="scholarship-badge"><i class="fas fa-map"></i></div>
+        <h3>State Rank Awards</h3>
+        <div class="award-list">
+          <div class="award-item gold"><i class="fas fa-medal"></i> Rank 1 — ₹15,000 + Gold Medal</div>
+          <div class="award-item silver"><i class="fas fa-medal"></i> Rank 2 — ₹10,000 + Silver Medal</div>
+          <div class="award-item bronze"><i class="fas fa-medal"></i> Rank 3 — ₹7,500 + Bronze Medal</div>
+          <div class="award-item"><i class="fas fa-certificate"></i> Rank 4–20 — ₹3,000 + Certificate</div>
+        </div>
+      </div>
+      <div class="scholarship-card district animate-on-scroll">
+        <div class="scholarship-badge"><i class="fas fa-city"></i></div>
+        <h3>District Rank Awards</h3>
+        <div class="award-list">
+          <div class="award-item gold"><i class="fas fa-medal"></i> Rank 1 — ₹5,000 + Gold Medal</div>
+          <div class="award-item silver"><i class="fas fa-medal"></i> Rank 2 — ₹3,000 + Silver Medal</div>
+          <div class="award-item bronze"><i class="fas fa-medal"></i> Rank 3 — ₹2,000 + Bronze Medal</div>
+        </div>
+      </div>
+      <div class="scholarship-card school animate-on-scroll">
+        <div class="scholarship-badge"><i class="fas fa-school"></i></div>
+        <h3>School Rank Awards</h3>
+        <div class="award-list">
+          <div class="award-item"><i class="fas fa-trophy"></i> School Topper — Gift Box + Trophy</div>
+          <div class="award-item"><i class="fas fa-certificate"></i> Top 3 — Medals + Certificates</div>
+          <div class="award-item"><i class="fas fa-star"></i> All Participants — Participation Certificate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gifts-section animate-on-scroll">
+      <h3 style="text-align:center;margin-bottom:2rem">Special Rewards for Top Performers</h3>
+      <div class="gifts-grid">
+        <div class="gift-item"><i class="fas fa-box-open"></i><span>Gift Boxes</span></div>
+        <div class="gift-item"><i class="fas fa-scroll"></i><span>Certificates</span></div>
+        <div class="gift-item"><i class="fas fa-medal"></i><span>Medals</span></div>
+        <div class="gift-item"><i class="fas fa-trophy"></i><span>Trophies</span></div>
+        <div class="gift-item"><i class="fas fa-rupee-sign"></i><span>Cash Prizes</span></div>
+        <div class="gift-item"><i class="fas fa-crown"></i><span>National Title</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STUDENT REGISTRATION ==================== -->
+<section id="register" class="register-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Register Now</span>
+      <h2>Student <span class="gradient-text">Registration</span></h2>
+      <p>Online registration only. Fill the form below to participate in AST 2025.</p>
+    </div>
+
+    <div class="form-container animate-on-scroll">
+      <!-- Progress Bar -->
+      <div class="form-progress">
+        <div class="progress-step active" data-step="1">
+          <div class="progress-circle">1</div>
+          <span>Personal Info</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="2">
+          <div class="progress-circle">2</div>
+          <span>Exam Details</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="3">
+          <div class="progress-circle">3</div>
+          <span>Verify & Submit</span>
+        </div>
+      </div>
+
+      <form id="student-form" novalidate>
+        <!-- Step 1 -->
+        <div class="form-step active" id="step-1">
+          <h3>Personal Information</h3>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>Full Name *</label>
+              <input type="text" id="s-name" placeholder="Enter full name as per school records" required />
+              <span class="error-msg" id="err-name"></span>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth *</label>
+              <input type="date" id="s-dob" required />
+              <span class="error-msg" id="err-dob"></span>
+            </div>
+            <div class="form-group">
+              <label>Gender *</label>
+              <select id="s-gender" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+              <span class="error-msg" id="err-gender"></span>
+            </div>
+            <div class="form-group">
+              <label>Class *</label>
+              <select id="s-class" required>
+                <option value="">Select Class</option>
+                <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+                <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+                <option>Class 7</option><option>Class 8</option><option>Class 9</option>
+                <option>Class 10</option>
+              </select>
+              <span class="error-msg" id="err-class"></span>
+            </div>
+            <div class="form-group">
+              <label>School Name *</label>
+              <input type="text" id="s-school" placeholder="Enter school name" required />
+              <span class="error-msg" id="err-school"></span>
+            </div>
+            <div class="form-group">
+              <label>Board *</label>
+              <select id="s-board" required>
+                <option value="">Select Board</option>
+                <option>CBSE</option><option>ICSE</option><option>State Board</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Student Mobile *</label>
+              <input type="tel" id="s-mobile" placeholder="10-digit mobile number" required />
+              <span class="error-msg" id="err-mobile"></span>
+            </div>
+            <div class="form-group">
+              <label>Parent Name *</label>
+              <input type="text" id="s-parent" placeholder="Parent / Guardian name" required />
+            </div>
+            <div class="form-group">
+              <label>Parent Mobile *</label>
+              <input type="tel" id="s-pmobile" placeholder="Parent's mobile number" required />
+              <span class="error-msg" id="err-pmobile"></span>
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" id="s-email" placeholder="student@email.com" required />
+              <span class="error-msg" id="err-email"></span>
+            </div>
+            <div class="form-group full-width">
+              <label>Address *</label>
+              <input type="text" id="s-address" placeholder="House no, Street, Area" required />
+            </div>
+            <div class="form-group">
+              <label>City *</label>
+              <input type="text" id="s-city" placeholder="City" required />
+            </div>
+            <div class="form-group">
+              <label>District *</label>
+              <input type="text" id="s-district" placeholder="District" required />
+            </div>
+            <div class="form-group">
+              <label>State *</label>
+              <select id="s-state" required>
+                <option value="">Select State</option>
+                <option>Andhra Pradesh</option><option>Bihar</option><option>Delhi</option>
+                <option>Gujarat</option><option>Jharkhand</option><option>Karnataka</option>
+                <option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option>
+                <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+                <option>Tamil Nadu</option><option>Telangana</option><option>Uttar Pradesh</option>
+                <option>Uttarakhand</option><option>West Bengal</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Pincode *</label>
+              <input type="text" id="s-pin" placeholder="6-digit pincode" required maxlength="6" />
+              <span class="error-msg" id="err-pin"></span>
+            </div>
+            <div class="form-group">
+              <label>Aadhaar Number <small>(Optional)</small></label>
+              <input type="text" id="s-aadhaar" placeholder="12-digit Aadhaar" maxlength="12" />
+            </div>
+            <div class="form-group">
+              <label>Student Photo</label>
+              <input type="file" id="s-photo" accept="image/*" />
+              <small>Passport-size photo (JPG/PNG, max 2MB)</small>
+            </div>
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next: Exam Details <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-step" id="step-2">
+          <h3>Exam Details</h3>
+          <div class="form-group">
+            <label>Select Subjects *</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" name="subjects" value="Mathematics" /> Mathematics</label>
+              <label class="checkbox-item"><input type="checkbox" name="subjects" value="Science" /> Science</label>
+              <label class="checkbox-item"><input type="checkbox" name="subjects" value="English" /> English</label>
+              <label class="checkbox-item"><input type="checkbox" name="subjects" value="Hindi" /> Hindi</label>
+              <label class="checkbox-item"><input type="checkbox" name="subjects" value="Drawing" /> Drawing</label>
+            </div>
+            <span class="error-msg" id="err-subjects"></span>
+          </div>
+          <div class="form-group">
+            <label>Preferred Language *</label>
+            <select id="s-lang">
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Exam Mode</label>
+            <div class="locked-field">
+              <i class="fas fa-lock"></i> Online (Individual students must appear online)
+            </div>
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next: Verify <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-step" id="step-3">
+          <h3>Verify & Submit</h3>
+          <div class="preview-card" id="preview-details">
+            <p class="preview-note"><i class="fas fa-info-circle"></i> Please review your details before submitting.</p>
+            <div id="preview-content"></div>
+          </div>
+          <div class="declaration-box">
+            <label class="checkbox-item">
+              <input type="checkbox" id="declaration" required />
+              I declare that all information provided is true and correct to the best of my knowledge. I agree to the Terms & Conditions of AST 2025.
+            </label>
+            <span class="error-msg" id="err-declaration"></span>
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+              <i class="fas fa-paper-plane"></i> Submit Registration
+            </button>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="form-step" id="step-success">
+          <div class="success-screen">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>Registration Successful!</h2>
+            <p>Congratulations! You have successfully registered for AST 2025.</p>
+            <div class="reg-number" id="reg-number"></div>
+            <p class="success-note">A confirmation email has been sent to your registered email address. Please save your Registration Number for future reference.</p>
+            <div class="success-actions">
+              <button class="btn btn-primary" onclick="downloadReceipt()"><i class="fas fa-download"></i> Download Receipt</button>
+              <button class="btn btn-outline" onclick="resetForm()">Register Another Student</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INSTITUTION REGISTRATION ==================== -->
+<section id="institution-register" class="institution-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Partner With Us</span>
+      <h2>Institution <span class="gradient-text">Registration</span></h2>
+      <p>Become an AST Partner Center and bring excellence to your students.</p>
+    </div>
+
+    <div class="form-container animate-on-scroll">
+      <form id="institution-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Institution Name *</label>
+            <input type="text" id="i-name" placeholder="Full name of institution" required />
+          </div>
+          <div class="form-group">
+            <label>Institution Type *</label>
+            <select id="i-type" required>
+              <option value="">Select Type</option>
+              <option>School</option><option>Coaching Center</option>
+              <option>Academy</option><option>NGO</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Principal / Director Name *</label>
+            <input type="text" id="i-principal" placeholder="Head of institution" required />
+          </div>
+          <div class="form-group">
+            <label>Contact Person *</label>
+            <input type="text" id="i-contact" placeholder="Point of contact" required />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="i-email" placeholder="institution@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="i-phone" placeholder="Primary phone" required />
+          </div>
+          <div class="form-group">
+            <label>Alternate Phone</label>
+            <input type="tel" id="i-altphone" placeholder="Alternate phone" />
+          </div>
+          <div class="form-group">
+            <label>Website</label>
+            <input type="url" id="i-website" placeholder="https://yourschool.edu.in" />
+          </div>
+          <div class="form-group full-width">
+            <label>Institution Address *</label>
+            <input type="text" id="i-address" placeholder="Full address" required />
+          </div>
+          <div class="form-group">
+            <label>City *</label>
+            <input type="text" id="i-city" placeholder="City" required />
+          </div>
+          <div class="form-group">
+            <label>District *</label>
+            <input type="text" id="i-district" placeholder="District" required />
+          </div>
+          <div class="form-group">
+            <label>State *</label>
+            <select id="i-state" required>
+              <option value="">Select State</option>
+              <option>Bihar</option><option>Uttar Pradesh</option><option>Delhi</option>
+              <option>Maharashtra</option><option>Gujarat</option><option>Rajasthan</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Pincode *</label>
+            <input type="text" id="i-pin" maxlength="6" placeholder="6-digit pincode" required />
+          </div>
+          <div class="form-group">
+            <label>Number of Students</label>
+            <input type="number" id="i-students" placeholder="Approx. number of students" />
+          </div>
+          <div class="form-group full-width">
+            <label>Preferred Exam Mode *</label>
+            <div class="radio-grid">
+              <label class="radio-item"><input type="radio" name="i-mode" value="Online" /> Online</label>
+              <label class="radio-item"><input type="radio" name="i-mode" value="Offline" /> Offline</label>
+              <label class="radio-item"><input type="radio" name="i-mode" value="Hybrid" /> Hybrid</label>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label>Facilities Available</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" name="facilities" /> Computer Lab</label>
+              <label class="checkbox-item"><input type="checkbox" name="facilities" /> Internet</label>
+              <label class="checkbox-item"><input type="checkbox" name="facilities" /> Projector</label>
+              <label class="checkbox-item"><input type="checkbox" name="facilities" /> Classrooms</label>
+              <label class="checkbox-item"><input type="checkbox" name="facilities" /> Exam Hall</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Institution Logo</label>
+            <input type="file" accept="image/*" />
+          </div>
+          <div class="form-group">
+            <label>Affiliation Certificate</label>
+            <input type="file" accept=".pdf,.jpg,.png" />
+          </div>
+        </div>
+        <div class="declaration-box">
+          <label class="checkbox-item">
+            <input type="checkbox" id="i-declaration" required />
+            I confirm that all information provided is accurate and I agree to AST's Institution Partnership Terms.
+          </label>
+        </div>
+        <div class="form-nav">
+          <button type="submit" class="btn btn-primary btn-lg" onclick="submitInstitution(event)">
+            <i class="fas fa-handshake"></i> Register Institution
+          </button>
+        </div>
+        <div id="institution-success" style="display:none">
+          <div class="success-screen">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>Institution Registered!</h2>
+            <p>Your institution has been registered. Our team will contact you within 24–48 hours.</p>
+            <div class="reg-number" id="inst-id"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RESULTS ==================== -->
+<section id="results" class="results-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Results</span>
+      <h2>Check Your <span class="gradient-text">Result</span></h2>
+      <p>Enter your details below to view your AST 2025 result.</p>
+    </div>
+    <div class="results-form animate-on-scroll">
+      <div class="search-tabs">
+        <button class="search-tab active" onclick="setResultTab(this,'reg')">Registration Number</button>
+        <button class="search-tab" onclick="setResultTab(this,'roll')">Roll Number</button>
+        <button class="search-tab" onclick="setResultTab(this,'name')">Student Name</button>
+      </div>
+      <div class="search-input-group">
+        <input type="text" id="result-search" placeholder="Enter Registration Number..." />
+        <button class="btn btn-primary" onclick="searchResult()"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <div id="result-card" style="display:none" class="result-card">
+        <div class="result-header">
+          <h3>Result Card</h3>
+          <span class="result-year">AST 2025</span>
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><label>Student Name</label><span id="r-name">Aarav Sharma</span></div>
+          <div class="result-item"><label>Class</label><span id="r-class">Class 8</span></div>
+          <div class="result-item"><label>Registration No.</label><span id="r-regno">AST2025-08-12345</span></div>
+          <div class="result-item"><label>Roll Number</label><span id="r-roll">AST-ROLL-08-0012</span></div>
+          <div class="result-item highlight"><label>National Rank</label><span id="r-rank" class="rank-badge">3</span></div>
+          <div class="result-item highlight"><label>Total Score</label><span id="r-score">156 / 170</span></div>
+          <div class="result-item"><label>Percentile</label><span id="r-percentile">99.8%</span></div>
+          <div class="result-item"><label>Scholarship Status</label><span class="badge-success">₹20,000 Awarded</span></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary"><i class="fas fa-download"></i> Download Result PDF</button>
+          <button class="btn btn-outline" onclick="window.print()"><i class="fas fa-print"></i> Print Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section id="faq" class="faq-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">FAQs</span>
+      <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+    </div>
+    <div class="faq-categories">
+      <button class="faq-cat active" onclick="filterFaq(this,'all')">All</button>
+      <button class="faq-cat" onclick="filterFaq(this,'registration')">Registration</button>
+      <button class="faq-cat" onclick="filterFaq(this,'exam')">Exam</button>
+      <button class="faq-cat" onclick="filterFaq(this,'scholarship')">Scholarship</button>
+      <button class="faq-cat" onclick="filterFaq(this,'results')">Results</button>
+      <button class="faq-cat" onclick="filterFaq(this,'institutions')">Institutions</button>
+    </div>
+    <div class="faq-list" id="faq-list">
+      <div class="faq-item" data-cat="registration">
+        <button class="faq-btn">Who is eligible to appear in AST? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Any student currently enrolled in Classes 1 to 10 in any recognized school in India is eligible to participate in AST.</p></div>
+      </div>
+      <div class="faq-item" data-cat="registration">
+        <button class="faq-btn">How do I register for AST? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Visit our website and click "Register as Student." Fill the online registration form with your personal and academic details. You will receive a confirmation email with your registration number.</p></div>
+      </div>
+      <div class="faq-item" data-cat="registration">
+        <button class="faq-btn">Is registration free? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Yes, registration for AST is completely free for individual students. There are no hidden charges.</p></div>
+      </div>
+      <div class="faq-item" data-cat="registration">
+        <button class="faq-btn">What documents are required for registration? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>You need a valid email ID, mobile number, school details, and optionally your Aadhaar number. A passport-size photo is also recommended.</p></div>
+      </div>
+      <div class="faq-item" data-cat="registration">
+        <button class="faq-btn">Can I edit my registration after submission? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Minor edits (like phone number or email) can be made by contacting our helpdesk within 48 hours of registration. Name and class changes are not permitted post-submission.</p></div>
+      </div>
+      <div class="faq-item" data-cat="exam">
+        <button class="faq-btn">What subjects are covered in AST? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>AST covers Mathematics, Science, English, Hindi, and Drawing. Students can choose the subjects they wish to appear for.</p></div>
+      </div>
+      <div class="faq-item" data-cat="exam">
+        <button class="faq-btn">Is the exam online or offline? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Individual student registrations are for online mode only. Schools and institutions can opt for offline or hybrid mode for their students.</p></div>
+      </div>
+      <div class="faq-item" data-cat="exam">
+        <button class="faq-btn">What is the exam duration? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Each subject has its own duration: Mathematics (60 mins), Science (60 mins), English (45 mins), Hindi (45 mins), Drawing (30 mins).</p></div>
+      </div>
+      <div class="faq-item" data-cat="exam">
+        <button class="faq-btn">Is there negative marking in AST? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>No, there is no negative marking in AST. Students are encouraged to attempt all questions.</p></div>
+      </div>
+      <div class="faq-item" data-cat="exam">
+        <button class="faq-btn">What devices can be used for online exam? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Students can use a laptop, desktop, or tablet with a stable internet connection and a working webcam for proctoring.</p></div>
+      </div>
+      <div class="faq-item" data-cat="scholarship">
+        <button class="faq-btn">What scholarships are available? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>AST offers scholarships at National (up to ₹50,000), State (up to ₹15,000), District (up to ₹5,000), and School level. All top performers receive medals, trophies, and certificates.</p></div>
+      </div>
+      <div class="faq-item" data-cat="scholarship">
+        <button class="faq-btn">How will scholarships be disbursed? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Scholarships are disbursed directly to the student's bank account (via parent's account for Class 1–5) within 30 days of result declaration.</p></div>
+      </div>
+      <div class="faq-item" data-cat="scholarship">
+        <button class="faq-btn">Will all participants receive a certificate? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Yes! Every student who appears in the AST exam will receive a digitally signed Participation Certificate, downloadable from the student portal.</p></div>
+      </div>
+      <div class="faq-item" data-cat="results">
+        <button class="faq-btn">When will results be declared? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Results will be declared approximately 30 days after the exam date. Students will be notified via email and SMS.</p></div>
+      </div>
+      <div class="faq-item" data-cat="results">
+        <button class="faq-btn">How can I check my result? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Visit the Results section on our website and enter your Registration Number, Roll Number, or Name to view your result card.</p></div>
+      </div>
+      <div class="faq-item" data-cat="institutions">
+        <button class="faq-btn">How can our school become a partner center? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Fill the Institution Registration form on our website. Our team will review and contact you within 48 hours to complete the onboarding process.</p></div>
+      </div>
+      <div class="faq-item" data-cat="institutions">
+        <button class="faq-btn">What benefits do partner institutions get? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><p>Partner institutions receive: bulk registration support, offline exam facilitation, institution performance report, branding support, and awards for top-performing schools.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact" class="contact-section section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-badge">Contact Us</span>
+      <h2>Get In <span class="gradient-text">Touch</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info animate-on-scroll">
+        <div class="contact-detail">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <h4>Office Address</h4>
+            <p>AcademeForge Education Pvt. Ltd.<br/>Patna, Bihar – 800001, India</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4>Email</h4>
+            <p>info@academeforge.in<br/>support@academeforge.in</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <h4>Phone</h4>
+            <p>+91 9876543210<br/>Mon–Sat, 9AM–6PM</p>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://wa.me/919876543210" class="social-btn whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="contact-form-box animate-on-scroll">
+        <form id="contact-form" onsubmit="submitContact(event)">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="Mobile number" />
+          </div>
+          <div class="form-group">
+            <label>Subject *</label>
+            <select required>
+              <option value="">Select Subject</option>
+              <option>Registration Help</option><option>Scholarship Query</option>
+              <option>Exam Details</option><option>Institution Partnership</option>
+              <option>Technical Support</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea rows="4" placeholder="Write your message here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:1rem">
+            <img src="IMG/AST.svg" alt="AST" style="height:40px;width:40px;object-fit:contain;border-radius:8px" onerror="this.style.display='none'" />
+            <div class="logo-text">
+              <span class="logo-title">AcademeForge</span>
+              <span class="logo-sub">Scholars Test</span>
+            </div>
+          </div>
+          <p>India's premier national scholarship and talent identification examination for Classes 1–10. Empowering tomorrow's leaders today.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/919876543210"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About AST</a></li>
+            <li><a href="#exam">Exam Details</a></li>
+            <li><a href="#scholarships">Scholarships</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Register</h4>
+          <ul>
+            <li><a href="#register">Student Registration</a></li>
+            <li><a href="#institution-register">Institution Registration</a></li>
+            <li><a href="#">Download Admit Card</a></li>
+            <li><a href="#">Download Syllabus</a></li>
+            <li><a href="#">Sample Papers</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Contact</h4>
+          <ul>
+            <li><i class="fas fa-envelope"></i> info@academeforge.in</li>
+            <li><i class="fas fa-phone"></i> +91 9876543210</li>
+            <li><i class="fas fa-map-marker-alt"></i> Patna, Bihar</li>
+          </ul>
+          <div style="margin-top:1rem">
+            <a href="https://wa.me/919876543210" class="btn btn-success btn-sm">
+              <i class="fab fa-whatsapp"></i> WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2025 AcademeForge Scholars Test (AST). All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" aria-label="Back to top" title="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- WHATSAPP FLOATING -->
+<a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
 </body>
 </html>
